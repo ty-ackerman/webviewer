@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Channel Picker</title>
+    <meta http-equiv="refresh" content="0; url=/" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", sans-serif;
+        background: #0f0f0f;
+        color: #fff;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      a {
+        color: #5b8bff;
+      }
+    </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        if (window.location.pathname !== "/") {
+          window.location.replace("/");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <h1 style="font-size:1.1rem; margin-bottom:0.5rem;">Channel Picker moved</h1>
+      <p style="font-size:0.9rem; color:#b5b5b5; line-height:1.5;">
+        Admin controls now live on the main page. If you're not redirected
+        automatically, <a href="/">open Channel Picker</a>.
+      </p>
+    </div>
+  </body>
+</html>

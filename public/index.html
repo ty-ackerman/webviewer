@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Channel Picker</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #0f0f0f;
+        color: #fff;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        padding: 1rem;
+        background: #090909;
+        border-bottom: 1px solid #151515;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      #layout {
+        flex: 1 1 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      @media (min-width: 900px) {
+        #layout {
+          grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+          align-items: start;
+        }
+      }
+
+      .card {
+        background: #111;
+        border: 1px solid #1f1f1f;
+        border-radius: 12px;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+        padding: 1rem;
+      }
+
+      #playerCard {
+        padding: 1rem;
+        background: #050505;
+      }
+
+      #playerWrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #1a1a1a;
+      }
+
+      #playerFrame {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #000;
+      }
+
+      #overlayTitle {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        right: 1rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.4;
+        color: #fff;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 6px;
+        padding: 0.6rem 0.75rem;
+        max-width: 90%;
+      }
+
+      #playerActions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.82rem;
+        color: #a3a3a3;
+      }
+
+      button,
+      input[type="text"] {
+        font-family: inherit;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background: #000;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.9rem;
+        color: #fff;
+        outline: none;
+        margin-bottom: 0.75rem;
+      }
+
+      input[type="text"]:focus {
+        border-color: #5b8bff;
+      }
+
+      button {
+        border: 0;
+        border-radius: 8px;
+        background: #5b8bff;
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.6rem 0.85rem;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+      }
+
+      button:active {
+        transform: scale(0.97);
+      }
+
+      button.secondary {
+        background: #232323;
+        color: #d4d4d4;
+      }
+
+      #status {
+        font-size: 0.8rem;
+        min-height: 1.2rem;
+        color: #9ef59e;
+        margin-bottom: 1rem;
+        word-break: break-word;
+      }
+
+      .panelTitle {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #d4d4d4;
+        margin-bottom: 0.6rem;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+      }
+
+      .videoListItem {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.7rem 0.85rem;
+        background: #0b0b0b;
+        border-radius: 9px;
+        border: 1px solid #1f1f1f;
+        margin-bottom: 0.55rem;
+      }
+
+      .videoMeta {
+        flex: 1 1 auto;
+        min-width: 220px;
+      }
+
+      .videoTitle {
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 1.4;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+      }
+
+      .currentTag {
+        font-size: 0.7rem;
+        color: #9ef59e;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid #2a2a2a;
+        border-radius: 5px;
+        padding: 0.2rem 0.45rem;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .videoUrl {
+        font-size: 0.7rem;
+        color: #8b8b8b;
+        line-height: 1.3;
+        word-break: break-all;
+        margin-top: 0.2rem;
+      }
+
+      .actions {
+        flex: 0 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .actions button.selectBtn {
+        background: #4ade80;
+        color: #000;
+      }
+
+      .actions button.deleteBtn {
+        background: #ef4444;
+        color: #fff;
+      }
+
+      #emptyState {
+        color: #777;
+        font-size: 0.8rem;
+        border: 1px dashed #2b2b2b;
+        border-radius: 8px;
+        padding: 0.9rem;
+        text-align: center;
+      }
+    </style>
+    <script>
+      // Basic popup hardening (legacy behavior retained)
+      (function () {
+        const originalOpen = window.open;
+        window.open = function (...args) {
+          console.warn("Popup blocked:", args);
+          return null;
+        };
+
+        document.addEventListener(
+          "click",
+          function (e) {
+            const t = e.target.closest("a, button");
+            if (
+              t &&
+              (t.target === "_blank" ||
+                (t.rel && t.rel.toLowerCase().includes("popup")))
+            ) {
+              e.preventDefault();
+              console.warn("Blocked popup click:", t.href);
+            }
+          },
+          true
+        );
+      })();
+
+      let pollTimer = null;
+      const POLL_INTERVAL = 30000;
+
+      async function requestJson(url, options) {
+        const res = await fetch(url, options);
+        const data = await res.json();
+        if (!res.ok) {
+          const err = new Error(data.error || "Request failed");
+          err.response = data;
+          throw err;
+        }
+        return data;
+      }
+
+      function setStatus(msg, good = true) {
+        const el = document.getElementById("status");
+        el.style.color = good ? "#9ef59e" : "#ff6b6b";
+        el.textContent = msg;
+      }
+
+      function setPlayer(video) {
+        const frame = document.getElementById("playerFrame");
+        const titleEl = document.getElementById("overlayTitle");
+        const nowPlayingEl = document.getElementById("nowPlayingMeta");
+
+        if (video) {
+          const embedUrl = `https://www.youtube.com/embed/${video.ytId}?autoplay=1&rel=0`;
+          if (frame.src !== embedUrl) {
+            frame.src = embedUrl;
+          }
+          titleEl.textContent = video.title;
+          titleEl.style.display = "block";
+          nowPlayingEl.textContent = video.title;
+        } else {
+          frame.removeAttribute("src");
+          titleEl.textContent = "No video selected yet.";
+          titleEl.style.display = "block";
+          nowPlayingEl.textContent = "Add a link to start playing.";
+        }
+      }
+
+      function renderList(videos, currentId) {
+        const listEl = document.getElementById("videoList");
+        listEl.innerHTML = "";
+
+        if (!videos.length) {
+          const empty = document.createElement("div");
+          empty.id = "emptyState";
+          empty.textContent = "No videos yet. Paste a YouTube link above to start.";
+          listEl.appendChild(empty);
+          return;
+        }
+
+        videos.forEach(v => {
+          const row = document.createElement("div");
+          row.className = "videoListItem";
+
+          const meta = document.createElement("div");
+          meta.className = "videoMeta";
+
+          const title = document.createElement("div");
+          title.className = "videoTitle";
+          title.textContent = v.title;
+
+          if (v.id === currentId) {
+            const tag = document.createElement("span");
+            tag.className = "currentTag";
+            tag.textContent = "PLAYING";
+            title.appendChild(tag);
+          }
+
+          const url = document.createElement("div");
+          url.className = "videoUrl";
+          url.textContent = v.url;
+
+          meta.appendChild(title);
+          meta.appendChild(url);
+
+          const actions = document.createElement("div");
+          actions.className = "actions";
+
+          const selectBtn = document.createElement("button");
+          selectBtn.className = "selectBtn";
+          selectBtn.textContent = "Play";
+          selectBtn.onclick = () => selectVideo(v.id);
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "deleteBtn";
+          delBtn.textContent = "Delete";
+          delBtn.onclick = () => deleteVideo(v.id);
+
+          actions.appendChild(selectBtn);
+          actions.appendChild(delBtn);
+
+          row.appendChild(meta);
+          row.appendChild(actions);
+
+          listEl.appendChild(row);
+        });
+      }
+
+      async function refreshAll({ silent = false } = {}) {
+        try {
+          const data = await requestJson("/api/videos");
+          renderList(data.videos, data.currentVideoId);
+          const current = data.videos.find(v => v.id === data.currentVideoId) || null;
+          setPlayer(current);
+          if (!silent) {
+            setStatus(current ? `Now playing: ${current.title}` : "Waiting for your first link.");
+          }
+        } catch (err) {
+          console.error(err);
+          if (!silent) {
+            setStatus(err.message || "Failed to refresh.", false);
+          }
+        }
+      }
+
+      async function addVideo() {
+        const urlInput = document.getElementById("newUrl");
+        const rawUrl = urlInput.value.trim();
+
+        if (!rawUrl) {
+          setStatus("Please paste a YouTube URL.", false);
+          return;
+        }
+
+        setStatus("Adding video…");
+
+        try {
+          await requestJson("/api/videos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url: rawUrl })
+          });
+
+          setStatus("Added.");
+          urlInput.value = "";
+          await refreshAll({ silent: true });
+          setStatus("Video added and ready to play.");
+        } catch (err) {
+          console.error(err);
+          setStatus(err.message || "Failed to add video.", false);
+        }
+      }
+
+      async function selectVideo(id) {
+        setStatus("Switching video…");
+        try {
+          await requestJson("/api/select", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id })
+          });
+          await refreshAll({ silent: true });
+          setStatus("Now playing updated.");
+        } catch (err) {
+          console.error(err);
+          setStatus(err.message || "Failed to switch video.", false);
+        }
+      }
+
+      async function deleteVideo(id) {
+        setStatus("Deleting…");
+        try {
+          await requestJson(`/api/videos/${id}`, { method: "DELETE" });
+          await refreshAll({ silent: true });
+          setStatus("Deleted.");
+        } catch (err) {
+          console.error(err);
+          setStatus(err.message || "Failed to delete.", false);
+        }
+      }
+
+      function setupForm() {
+        const urlInput = document.getElementById("newUrl");
+        urlInput.addEventListener("keydown", evt => {
+          if (evt.key === "Enter") {
+            evt.preventDefault();
+            addVideo();
+          }
+        });
+
+        document.getElementById("addBtn").addEventListener("click", addVideo);
+        document.getElementById("refreshBtn").addEventListener("click", () => refreshAll({ silent: false }));
+        document.getElementById("fullscreenBtn").addEventListener("click", () => {
+          const frame = document.getElementById("playerFrame");
+          if (frame.requestFullscreen) {
+            frame.requestFullscreen();
+          } else if (frame.webkitRequestFullscreen) {
+            frame.webkitRequestFullscreen();
+          }
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        setupForm();
+        refreshAll();
+        pollTimer = setInterval(() => refreshAll({ silent: true }), POLL_INTERVAL);
+      });
+
+      window.addEventListener("beforeunload", () => {
+        if (pollTimer) clearInterval(pollTimer);
+      });
+    </script>
+  </head>
+  <body>
+    <header>Channel Picker</header>
+    <div id="layout">
+      <section id="playerCard" class="card">
+        <div id="playerWrapper">
+          <div id="overlayTitle"></div>
+          <iframe
+            id="playerFrame"
+            allowfullscreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            frameborder="0"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+        <div id="playerActions">
+          <span><strong>Now Playing:</strong> <span id="nowPlayingMeta">Loading…</span></span>
+          <button id="refreshBtn" class="secondary">Refresh</button>
+          <button id="fullscreenBtn" class="secondary">Fullscreen</button>
+        </div>
+      </section>
+
+      <section id="controls" class="card">
+        <div id="status"></div>
+
+        <div class="panelTitle">Add a YouTube link</div>
+        <input
+          id="newUrl"
+          type="text"
+          placeholder="https://www.youtube.com/watch?v=..."
+          autocomplete="off"
+        />
+        <button id="addBtn">Add Video</button>
+
+        <div class="panelTitle" style="margin-top:1.4rem;">Playlist</div>
+        <div id="videoList"></div>
+      </section>
+    </div>
+  </body>
+</html>
