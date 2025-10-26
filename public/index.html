@@ -361,11 +361,9 @@
         );
       })();
 
-      const POLL_INTERVAL = 30000;
       const VIEW_STORAGE_KEY = "channel-picker-active-view";
       const STREAM_SANDBOX_ATTR = "allow-scripts allow-same-origin allow-presentation";
       const STREAM_IFRAME_ALLOW = "autoplay; encrypted-media; picture-in-picture";
-      let pollTimer = null;
       let activeView = "videos";
       let activeStreamState = null;
 
@@ -978,15 +976,6 @@
         return refreshVideos({ silent });
       }
 
-      function restartPolling() {
-        if (pollTimer) {
-          clearInterval(pollTimer);
-        }
-        pollTimer = setInterval(() => {
-          refreshActive({ silent: true }).catch(() => {});
-        }, POLL_INTERVAL);
-      }
-
       function setActiveView(view) {
         if (view !== "videos" && view !== "streams") {
           return;
@@ -1008,7 +997,6 @@
         refreshActive({ silent: false })
           .catch(() => {})
           .finally(updatePlayerForActiveView);
-        restartPolling();
       }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -1025,12 +1013,6 @@
           .catch(() => {})
           .finally(updatePlayerForActiveView);
         refreshStreams({ silent: true }).catch(() => {});
-
-        restartPolling();
-      });
-
-      window.addEventListener("beforeunload", () => {
-        if (pollTimer) clearInterval(pollTimer);
       });
     </script>
   </head>
