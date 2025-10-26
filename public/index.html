@@ -367,6 +367,7 @@
       const STREAM_IFRAME_ALLOW = "autoplay; encrypted-media; picture-in-picture";
       let pollTimer = null;
       let activeView = "videos";
+      let activeStreamState = null;
 
       const cache = {
         videos: [],
@@ -470,6 +471,7 @@
 
         streamContainer.innerHTML = "";
         streamContainer.classList.add("hiddenFrame");
+        activeStreamState = null;
         frame.classList.remove("hiddenFrame");
 
         if (video) {
@@ -495,28 +497,51 @@
         frame.removeAttribute("src");
         frame.classList.add("hiddenFrame");
         streamContainer.classList.remove("hiddenFrame");
-        streamContainer.innerHTML = "";
 
-        if (stream) {
-          const sandboxed = stream.sandboxed !== false;
-          if (stream.embedSrc) {
-            const iframe = document.createElement("iframe");
-            iframe.src = stream.embedSrc;
-            configureStreamIframe(iframe, { sandboxed });
-            streamContainer.appendChild(iframe);
-          } else {
-            streamContainer.innerHTML = sanitizeEmbed(stream.embedCode, { sandboxed });
-            streamContainer.querySelectorAll("iframe").forEach(node =>
-              configureStreamIframe(node, { sandboxed })
-            );
-          }
-          titleEl.textContent = stream.title;
-          nowPlayingEl.textContent = stream.title;
-        } else {
+        if (!stream) {
           streamContainer.innerHTML = "";
           titleEl.textContent = "No stream selected yet.";
           nowPlayingEl.textContent = "Add an embed code to start playing.";
+          activeStreamState = null;
+          return;
         }
+
+        const sandboxed = stream.sandboxed !== false;
+        const nextState = {
+          id: stream.id,
+          sandboxed,
+          embedSrc: stream.embedSrc || null,
+          embedCode: stream.embedCode || ""
+        };
+
+        const unchanged =
+          activeStreamState &&
+          activeStreamState.id === nextState.id &&
+          activeStreamState.sandboxed === nextState.sandboxed &&
+          activeStreamState.embedSrc === nextState.embedSrc &&
+          (!nextState.embedSrc && activeStreamState.embedCode === nextState.embedCode);
+
+        if (unchanged) {
+          return;
+        }
+
+        streamContainer.innerHTML = "";
+
+        if (nextState.embedSrc) {
+          const iframe = document.createElement("iframe");
+          iframe.src = nextState.embedSrc;
+          configureStreamIframe(iframe, { sandboxed });
+          streamContainer.appendChild(iframe);
+        } else {
+          streamContainer.innerHTML = sanitizeEmbed(nextState.embedCode, { sandboxed });
+          streamContainer.querySelectorAll("iframe").forEach(node =>
+            configureStreamIframe(node, { sandboxed })
+          );
+        }
+
+        titleEl.textContent = stream.title;
+        nowPlayingEl.textContent = stream.title;
+        activeStreamState = nextState;
       }
 
       function renderVideoList(videos, currentId) {
