@@ -36,6 +36,33 @@
         letter-spacing: 0.02em;
       }
 
+      #viewTabs {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .viewTab {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: #151515;
+        color: #cfcfcf;
+        border: 1px solid #242424;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      }
+
+      .viewTab.active {
+        background: #5b8bff;
+        border-color: #6e9aff;
+        color: #fff;
+      }
+
       #layout {
         flex: 1 1 auto;
         display: grid;
@@ -81,6 +108,28 @@
         height: 100%;
         border: 0;
         background: #000;
+      }
+
+      .hiddenFrame {
+        display: none !important;
+      }
+
+      #streamPlayer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+      }
+
+      #streamPlayer iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
       }
 
       #overlayTitle {
@@ -150,12 +199,35 @@
         color: #d4d4d4;
       }
 
-      #status {
+      .statusLine {
         font-size: 0.8rem;
         min-height: 1.2rem;
         color: #9ef59e;
         margin-bottom: 1rem;
         word-break: break-word;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 130px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background: #000;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.9rem;
+        color: #fff;
+        outline: none;
+        margin-bottom: 0.75rem;
+        resize: vertical;
+        font-family: inherit;
+      }
+
+      textarea:focus {
+        border-color: #5b8bff;
       }
 
       .panelTitle {
@@ -231,7 +303,7 @@
         color: #fff;
       }
 
-      #emptyState {
+      .emptyState {
         color: #777;
         font-size: 0.8rem;
         border: 1px dashed #2b2b2b;
@@ -266,8 +338,16 @@
         );
       })();
 
-      let pollTimer = null;
       const POLL_INTERVAL = 30000;
+      let pollTimer = null;
+      let activeView = "videos";
+
+      const cache = {
+        videos: [],
+        currentVideoId: null,
+        streams: [],
+        currentStreamId: null
+      };
 
       async function requestJson(url, options) {
         const res = await fetch(url, options);
@@ -280,16 +360,35 @@
         return data;
       }
 
-      function setStatus(msg, good = true) {
-        const el = document.getElementById("status");
+      function getStatusEl(view) {
+        if (view === "streams") return document.getElementById("statusStreams");
+        return document.getElementById("statusVideos");
+      }
+
+      function setStatus(view, msg, good = true) {
+        const el = getStatusEl(view);
+        if (!el) return;
         el.style.color = good ? "#9ef59e" : "#ff6b6b";
         el.textContent = msg;
       }
 
-      function setPlayer(video) {
+      function sanitizeEmbed(html) {
+        if (typeof html !== "string") return "";
+        const template = document.createElement("template");
+        template.innerHTML = html;
+        template.content.querySelectorAll("script").forEach(node => node.remove());
+        return template.innerHTML;
+      }
+
+      function setVideoPlayer(video) {
         const frame = document.getElementById("playerFrame");
+        const streamContainer = document.getElementById("streamPlayer");
         const titleEl = document.getElementById("overlayTitle");
         const nowPlayingEl = document.getElementById("nowPlayingMeta");
+
+        streamContainer.innerHTML = "";
+        streamContainer.classList.add("hiddenFrame");
+        frame.classList.remove("hiddenFrame");
 
         if (video) {
           const embedUrl = `https://www.youtube.com/embed/${video.ytId}?autoplay=1&rel=0`;
@@ -297,29 +396,48 @@
             frame.src = embedUrl;
           }
           titleEl.textContent = video.title;
-          titleEl.style.display = "block";
           nowPlayingEl.textContent = video.title;
         } else {
           frame.removeAttribute("src");
           titleEl.textContent = "No video selected yet.";
-          titleEl.style.display = "block";
           nowPlayingEl.textContent = "Add a link to start playing.";
         }
       }
 
-      function renderList(videos, currentId) {
+      function setStreamPlayer(stream) {
+        const frame = document.getElementById("playerFrame");
+        const streamContainer = document.getElementById("streamPlayer");
+        const titleEl = document.getElementById("overlayTitle");
+        const nowPlayingEl = document.getElementById("nowPlayingMeta");
+
+        frame.removeAttribute("src");
+        frame.classList.add("hiddenFrame");
+        streamContainer.classList.remove("hiddenFrame");
+
+        if (stream) {
+          streamContainer.innerHTML = sanitizeEmbed(stream.embedCode);
+          titleEl.textContent = stream.title;
+          nowPlayingEl.textContent = stream.title;
+        } else {
+          streamContainer.innerHTML = "";
+          titleEl.textContent = "No stream selected yet.";
+          nowPlayingEl.textContent = "Add an embed code to start playing.";
+        }
+      }
+
+      function renderVideoList(videos, currentId) {
         const listEl = document.getElementById("videoList");
         listEl.innerHTML = "";
 
         if (!videos.length) {
           const empty = document.createElement("div");
-          empty.id = "emptyState";
+          empty.className = "emptyState";
           empty.textContent = "No videos yet. Paste a YouTube link above to start.";
           listEl.appendChild(empty);
           return;
         }
 
-        videos.forEach(v => {
+        videos.forEach(video => {
           const row = document.createElement("div");
           row.className = "videoListItem";
 
@@ -328,9 +446,9 @@
 
           const title = document.createElement("div");
           title.className = "videoTitle";
-          title.textContent = v.title;
+          title.textContent = video.title;
 
-          if (v.id === currentId) {
+          if (video.id === currentId) {
             const tag = document.createElement("span");
             tag.className = "currentTag";
             tag.textContent = "PLAYING";
@@ -339,7 +457,7 @@
 
           const url = document.createElement("div");
           url.className = "videoUrl";
-          url.textContent = v.url;
+          url.textContent = video.url;
 
           meta.appendChild(title);
           meta.appendChild(url);
@@ -350,12 +468,12 @@
           const selectBtn = document.createElement("button");
           selectBtn.className = "selectBtn";
           selectBtn.textContent = "Play";
-          selectBtn.onclick = () => selectVideo(v.id);
+          selectBtn.onclick = () => selectVideo(video.id);
 
           const delBtn = document.createElement("button");
           delBtn.className = "deleteBtn";
           delBtn.textContent = "Delete";
-          delBtn.onclick = () => deleteVideo(v.id);
+          delBtn.onclick = () => deleteVideo(video.id);
 
           actions.appendChild(selectBtn);
           actions.appendChild(delBtn);
@@ -367,20 +485,127 @@
         });
       }
 
-      async function refreshAll({ silent = false } = {}) {
+      function renderStreamList(streams, currentId) {
+        const listEl = document.getElementById("streamList");
+        listEl.innerHTML = "";
+
+        if (!streams.length) {
+          const empty = document.createElement("div");
+          empty.className = "emptyState";
+          empty.textContent = "No streams saved yet. Paste an embed snippet above.";
+          listEl.appendChild(empty);
+          return;
+        }
+
+        streams.forEach(stream => {
+          const row = document.createElement("div");
+          row.className = "videoListItem";
+
+          const meta = document.createElement("div");
+          meta.className = "videoMeta";
+
+          const title = document.createElement("div");
+          title.className = "videoTitle";
+          title.textContent = stream.title;
+
+          if (stream.id === currentId) {
+            const tag = document.createElement("span");
+            tag.className = "currentTag";
+            tag.textContent = "ACTIVE";
+            title.appendChild(tag);
+          }
+
+          const url = document.createElement("div");
+          url.className = "videoUrl";
+          url.textContent = stream.embedSrc || "Custom embed snippet saved.";
+
+          meta.appendChild(title);
+          meta.appendChild(url);
+
+          const actions = document.createElement("div");
+          actions.className = "actions";
+
+          const selectBtn = document.createElement("button");
+          selectBtn.className = "selectBtn";
+          selectBtn.textContent = "Show";
+          selectBtn.onclick = () => selectStream(stream.id);
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "deleteBtn";
+          delBtn.textContent = "Delete";
+          delBtn.onclick = () => deleteStream(stream.id);
+
+          actions.appendChild(selectBtn);
+          actions.appendChild(delBtn);
+
+          row.appendChild(meta);
+          row.appendChild(actions);
+
+          listEl.appendChild(row);
+        });
+      }
+
+      async function refreshVideos({ silent = false } = {}) {
         try {
           const data = await requestJson("/api/videos");
-          renderList(data.videos, data.currentVideoId);
-          const current = data.videos.find(v => v.id === data.currentVideoId) || null;
-          setPlayer(current);
-          if (!silent) {
-            setStatus(current ? `Now playing: ${current.title}` : "Waiting for your first link.");
+          cache.videos = Array.isArray(data.videos) ? data.videos : [];
+          cache.currentVideoId = typeof data.currentVideoId === "string" ? data.currentVideoId : null;
+          renderVideoList(cache.videos, cache.currentVideoId);
+
+          const current = cache.videos.find(video => video.id === cache.currentVideoId) || null;
+          if (activeView === "videos") {
+            setVideoPlayer(current);
           }
+
+          if (!silent) {
+            const message = current
+              ? `Now playing: ${current.title}`
+              : "Waiting for your first link.";
+            setStatus("videos", message);
+          }
+
+          return data;
         } catch (err) {
           console.error(err);
           if (!silent) {
-            setStatus(err.message || "Failed to refresh.", false);
+            setStatus("videos", err.message || "Failed to refresh videos.", false);
           }
+          if (activeView === "videos") {
+            setVideoPlayer(null);
+          }
+          throw err;
+        }
+      }
+
+      async function refreshStreams({ silent = false } = {}) {
+        try {
+          const data = await requestJson("/api/streams");
+          cache.streams = Array.isArray(data.streams) ? data.streams : [];
+          cache.currentStreamId = typeof data.currentStreamId === "string" ? data.currentStreamId : null;
+          renderStreamList(cache.streams, cache.currentStreamId);
+
+          const current = cache.streams.find(stream => stream.id === cache.currentStreamId) || null;
+          if (activeView === "streams") {
+            setStreamPlayer(current);
+          }
+
+          if (!silent) {
+            const message = current
+              ? `Now streaming: ${current.title}`
+              : "Add your first embed to begin.";
+            setStatus("streams", message);
+          }
+
+          return data;
+        } catch (err) {
+          console.error(err);
+          if (!silent) {
+            setStatus("streams", err.message || "Failed to refresh streams.", false);
+          }
+          if (activeView === "streams") {
+            setStreamPlayer(null);
+          }
+          throw err;
         }
       }
 
@@ -389,11 +614,11 @@
         const rawUrl = urlInput.value.trim();
 
         if (!rawUrl) {
-          setStatus("Please paste a YouTube URL.", false);
+          setStatus("videos", "Please paste a YouTube URL.", false);
           return;
         }
 
-        setStatus("Adding video…");
+        setStatus("videos", "Adding video…");
 
         try {
           await requestJson("/api/videos", {
@@ -402,45 +627,111 @@
             body: JSON.stringify({ url: rawUrl })
           });
 
-          setStatus("Added.");
           urlInput.value = "";
-          await refreshAll({ silent: true });
-          setStatus("Video added and ready to play.");
+          await refreshVideos({ silent: true });
+          setStatus("videos", "Video added and ready to play.");
         } catch (err) {
           console.error(err);
-          setStatus(err.message || "Failed to add video.", false);
+          setStatus("videos", err.message || "Failed to add video.", false);
         }
       }
 
       async function selectVideo(id) {
-        setStatus("Switching video…");
+        setStatus("videos", "Switching video…");
         try {
           await requestJson("/api/select", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id })
           });
-          await refreshAll({ silent: true });
-          setStatus("Now playing updated.");
+          await refreshVideos({ silent: true });
+          setStatus("videos", "Now playing updated.");
         } catch (err) {
           console.error(err);
-          setStatus(err.message || "Failed to switch video.", false);
+          setStatus("videos", err.message || "Failed to switch video.", false);
         }
       }
 
       async function deleteVideo(id) {
-        setStatus("Deleting…");
+        setStatus("videos", "Deleting…");
         try {
           await requestJson(`/api/videos/${id}`, { method: "DELETE" });
-          await refreshAll({ silent: true });
-          setStatus("Deleted.");
+          await refreshVideos({ silent: true });
+          setStatus("videos", "Deleted.");
         } catch (err) {
           console.error(err);
-          setStatus(err.message || "Failed to delete.", false);
+          setStatus("videos", err.message || "Failed to delete.", false);
         }
       }
 
-      function setupForm() {
+      async function addStream() {
+        const titleInput = document.getElementById("newStreamTitle");
+        const embedInput = document.getElementById("newStreamEmbed");
+        const title = titleInput.value.trim();
+        const embedCode = embedInput.value.trim();
+
+        if (!embedCode) {
+          setStatus("streams", "Please paste an embed snippet.", false);
+          return;
+        }
+
+        setStatus("streams", "Adding stream…");
+
+        try {
+          await requestJson("/api/streams", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title, embedCode })
+          });
+
+          titleInput.value = "";
+          embedInput.value = "";
+          await refreshStreams({ silent: true });
+          setStatus("streams", "Stream added and ready.");
+          if (activeView === "streams") {
+            updatePlayerForActiveView();
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus("streams", err.message || "Failed to add stream.", false);
+        }
+      }
+
+      async function selectStream(id) {
+        setStatus("streams", "Switching stream…");
+        try {
+          await requestJson("/api/streams/select", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id })
+          });
+          await refreshStreams({ silent: true });
+          setStatus("streams", "Now streaming updated.");
+          if (activeView === "streams") {
+            updatePlayerForActiveView();
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus("streams", err.message || "Failed to switch stream.", false);
+        }
+      }
+
+      async function deleteStream(id) {
+        setStatus("streams", "Deleting stream…");
+        try {
+          await requestJson(`/api/streams/${id}`, { method: "DELETE" });
+          await refreshStreams({ silent: true });
+          setStatus("streams", "Stream removed.");
+          if (activeView === "streams") {
+            updatePlayerForActiveView();
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus("streams", err.message || "Failed to delete stream.", false);
+        }
+      }
+
+      function setupVideoControls() {
         const urlInput = document.getElementById("newUrl");
         urlInput.addEventListener("keydown", evt => {
           if (evt.key === "Enter") {
@@ -450,21 +741,121 @@
         });
 
         document.getElementById("addBtn").addEventListener("click", addVideo);
-        document.getElementById("refreshBtn").addEventListener("click", () => refreshAll({ silent: false }));
+      }
+
+      function setupStreamControls() {
+        const embedInput = document.getElementById("newStreamEmbed");
+        embedInput.addEventListener("keydown", evt => {
+          if ((evt.metaKey || evt.ctrlKey) && evt.key === "Enter") {
+            evt.preventDefault();
+            addStream();
+          }
+        });
+
+        document.getElementById("addStreamBtn").addEventListener("click", addStream);
+      }
+
+      function setupCommonControls() {
+        document.getElementById("refreshBtn").addEventListener("click", () => {
+          refreshActive({ silent: false }).catch(() => {});
+        });
+
         document.getElementById("fullscreenBtn").addEventListener("click", () => {
-          const frame = document.getElementById("playerFrame");
-          if (frame.requestFullscreen) {
-            frame.requestFullscreen();
-          } else if (frame.webkitRequestFullscreen) {
-            frame.webkitRequestFullscreen();
+          if (activeView === "streams") {
+            const container = document.getElementById("streamPlayer");
+            const iframe = container.querySelector("iframe");
+            const target = iframe || container;
+            if (target.requestFullscreen) {
+              target.requestFullscreen();
+            } else if (target.webkitRequestFullscreen) {
+              target.webkitRequestFullscreen();
+            }
+          } else {
+            const frame = document.getElementById("playerFrame");
+            if (frame.requestFullscreen) {
+              frame.requestFullscreen();
+            } else if (frame.webkitRequestFullscreen) {
+              frame.webkitRequestFullscreen();
+            }
           }
         });
       }
 
+      function setupViewTabs() {
+        const tabs = document.querySelectorAll(".viewTab");
+        tabs.forEach(tab => {
+          tab.classList.toggle("active", tab.dataset.view === activeView);
+          tab.addEventListener("click", () => {
+            setActiveView(tab.dataset.view);
+          });
+        });
+      }
+
+      function syncViewVisibility() {
+        document.getElementById("videoControls").classList.toggle("hidden", activeView !== "videos");
+        document.getElementById("streamControls").classList.toggle("hidden", activeView !== "streams");
+      }
+
+      function updatePlayerForActiveView() {
+        if (activeView === "streams") {
+          const current = cache.streams.find(stream => stream.id === cache.currentStreamId) || null;
+          setStreamPlayer(current);
+        } else {
+          const current = cache.videos.find(video => video.id === cache.currentVideoId) || null;
+          setVideoPlayer(current);
+        }
+      }
+
+      function refreshActive({ silent = false } = {}) {
+        if (activeView === "streams") {
+          return refreshStreams({ silent });
+        }
+        return refreshVideos({ silent });
+      }
+
+      function restartPolling() {
+        if (pollTimer) {
+          clearInterval(pollTimer);
+        }
+        pollTimer = setInterval(() => {
+          refreshActive({ silent: true }).catch(() => {});
+        }, POLL_INTERVAL);
+      }
+
+      function setActiveView(view) {
+        if (view === activeView) {
+          return;
+        }
+
+        activeView = view;
+
+        document.querySelectorAll(".viewTab").forEach(tab => {
+          tab.classList.toggle("active", tab.dataset.view === view);
+        });
+
+        syncViewVisibility();
+        updatePlayerForActiveView();
+        refreshActive({ silent: false })
+          .catch(() => {})
+          .finally(updatePlayerForActiveView);
+        restartPolling();
+      }
+
       window.addEventListener("DOMContentLoaded", () => {
-        setupForm();
-        refreshAll();
-        pollTimer = setInterval(() => refreshAll({ silent: true }), POLL_INTERVAL);
+        setupViewTabs();
+        setupVideoControls();
+        setupStreamControls();
+        setupCommonControls();
+        syncViewVisibility();
+
+        setStatus("streams", "Paste an embed snippet to get started.");
+
+        refreshVideos({ silent: false })
+          .catch(() => {})
+          .finally(updatePlayerForActiveView);
+        refreshStreams({ silent: true }).catch(() => {});
+
+        restartPolling();
       });
 
       window.addEventListener("beforeunload", () => {
@@ -474,6 +865,10 @@
   </head>
   <body>
     <header>Channel Picker</header>
+    <div id="viewTabs">
+      <button type="button" class="viewTab" data-view="videos">YouTube Playlist</button>
+      <button type="button" class="viewTab" data-view="streams">Live Streams</button>
+    </div>
     <div id="layout">
       <section id="playerCard" class="card">
         <div id="playerWrapper">
@@ -485,6 +880,7 @@
             frameborder="0"
             referrerpolicy="strict-origin-when-cross-origin"
           ></iframe>
+          <div id="streamPlayer" class="hiddenFrame"></div>
         </div>
         <div id="playerActions">
           <span><strong>Now Playing:</strong> <span id="nowPlayingMeta">Loading…</span></span>
@@ -494,19 +890,42 @@
       </section>
 
       <section id="controls" class="card">
-        <div id="status"></div>
+        <div id="videoControls">
+          <div id="statusVideos" class="statusLine"></div>
 
-        <div class="panelTitle">Add a YouTube link</div>
-        <input
-          id="newUrl"
-          type="text"
-          placeholder="https://www.youtube.com/watch?v=..."
-          autocomplete="off"
-        />
-        <button id="addBtn">Add Video</button>
+          <div class="panelTitle">Add a YouTube link</div>
+          <input
+            id="newUrl"
+            type="text"
+            placeholder="https://www.youtube.com/watch?v=..."
+            autocomplete="off"
+          />
+          <button id="addBtn">Add Video</button>
 
-        <div class="panelTitle" style="margin-top:1.4rem;">Playlist</div>
-        <div id="videoList"></div>
+          <div class="panelTitle" style="margin-top:1.4rem;">Playlist</div>
+          <div id="videoList"></div>
+        </div>
+
+        <div id="streamControls" class="hidden">
+          <div id="statusStreams" class="statusLine"></div>
+
+          <div class="panelTitle">Add a stream embed</div>
+          <input
+            id="newStreamTitle"
+            type="text"
+            placeholder="Stream name (optional)"
+            autocomplete="off"
+          />
+          <textarea
+            id="newStreamEmbed"
+            placeholder="&lt;iframe ...&gt;&lt;/iframe&gt;"
+            autocomplete="off"
+          ></textarea>
+          <button id="addStreamBtn">Add Stream</button>
+
+          <div class="panelTitle" style="margin-top:1.4rem;">Saved Streams</div>
+          <div id="streamList"></div>
+        </div>
       </section>
     </div>
   </body>

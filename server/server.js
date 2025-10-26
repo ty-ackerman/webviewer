@@ -14,16 +14,47 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, "../public")));
 
+// helper: normalize persisted data shape
+function ensureStoreShape(raw) {
+  const base = {
+    videos: [],
+    currentVideoId: null,
+    streams: [],
+    currentStreamId: null
+  };
+
+  if (!raw || typeof raw !== "object") {
+    return base;
+  }
+
+  const data = { ...base };
+
+  if (Array.isArray(raw.videos)) {
+    data.videos = raw.videos;
+  }
+
+  if (typeof raw.currentVideoId === "string" || raw.currentVideoId === null) {
+    data.currentVideoId = raw.currentVideoId;
+  }
+
+  if (Array.isArray(raw.streams)) {
+    data.streams = raw.streams;
+  }
+
+  if (typeof raw.currentStreamId === "string" || raw.currentStreamId === null) {
+    data.currentStreamId = raw.currentStreamId;
+  }
+
+  return data;
+}
+
 // helper: read persisted data
 function readStore() {
   try {
     const raw = fs.readFileSync(STORE_PATH, "utf8");
-    return JSON.parse(raw);
+    return ensureStoreShape(JSON.parse(raw));
   } catch (e) {
-    return {
-      videos: [], // [{ id: "abc123", title: "Raptors Highlights", url: "https://www.youtube.com/watch?v=..." }]
-      currentVideoId: null
-    };
+    return ensureStoreShape();
   }
 }
 
@@ -33,12 +64,42 @@ function writeStore(data) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  fs.writeFileSync(STORE_PATH, JSON.stringify(data, null, 2), "utf8");
+  const normalized = ensureStoreShape(data);
+  fs.writeFileSync(STORE_PATH, JSON.stringify(normalized, null, 2), "utf8");
 }
 
 // cheap id generator for list items
 function makeId() {
   return Math.random().toString(36).slice(2, 9);
+}
+
+function extractEmbedSrc(embedCode) {
+  if (typeof embedCode !== "string") return "";
+  const match = embedCode.match(/src=["']([^"']+)["']/i);
+  return match && match[1] ? match[1] : "";
+}
+
+function guessStreamTitle({ providedTitle, embedCode }) {
+  if (providedTitle && typeof providedTitle === "string" && providedTitle.trim()) {
+    return providedTitle.trim();
+  }
+
+  const src = extractEmbedSrc(embedCode);
+  if (!src) {
+    return "Custom Stream";
+  }
+
+  try {
+    const parsed = new URL(src, "https://placeholder.local");
+    const host = parsed.hostname.replace(/^www\./i, "");
+    const pathPart = parsed.pathname.replace(/^\/+/, "");
+    if (pathPart) {
+      return `${host} / ${pathPart}`;
+    }
+    return host || "Custom Stream";
+  } catch (err) {
+    return "Custom Stream";
+  }
 }
 
 // fetch a friendly title from YouTube's oEmbed endpoint
@@ -205,6 +266,91 @@ app.get("/api/current", (req, res) => {
         }
       : null
   });
+});
+
+// Streams APIs
+app.get("/api/streams", (req, res) => {
+  const data = readStore();
+  res.json({
+    streams: data.streams,
+    currentStreamId: data.currentStreamId
+  });
+});
+
+app.post("/api/streams", (req, res) => {
+  const { title, embedCode } = req.body || {};
+
+  if (!embedCode || typeof embedCode !== "string" || !embedCode.trim()) {
+    return res.status(400).json({ error: "Missing embedCode" });
+  }
+
+  try {
+    const data = readStore();
+    const trimmedEmbed = embedCode.trim();
+    const embedSrc = extractEmbedSrc(trimmedEmbed);
+    const resolvedTitle = guessStreamTitle({ providedTitle: title, embedCode: trimmedEmbed });
+
+    const newStream = {
+      id: makeId(),
+      title: resolvedTitle,
+      embedCode: trimmedEmbed,
+      embedSrc: embedSrc || null
+    };
+
+    data.streams.push(newStream);
+
+    if (!data.currentStreamId) {
+      data.currentStreamId = newStream.id;
+    }
+
+    writeStore(data);
+
+    res.json({ ok: true, stream: newStream });
+  } catch (err) {
+    console.error("Failed to add stream", err);
+    res.status(500).json({ error: "Server error while adding stream." });
+  }
+});
+
+app.post("/api/streams/select", (req, res) => {
+  const { id } = req.body || {};
+
+  const data = readStore();
+  const exists = data.streams.find(s => s.id === id);
+
+  if (!exists) {
+    return res.status(404).json({ error: "Stream not found" });
+  }
+
+  data.currentStreamId = id;
+  writeStore(data);
+
+  res.json({ ok: true, currentStreamId: id });
+});
+
+app.delete("/api/streams/:id", (req, res) => {
+  const { id } = req.params;
+
+  const data = readStore();
+  const beforeLen = data.streams.length;
+  data.streams = data.streams.filter(s => s.id !== id);
+
+  if (data.currentStreamId === id) {
+    data.currentStreamId = data.streams[0]?.id || null;
+  }
+
+  writeStore(data);
+
+  res.json({
+    ok: true,
+    removed: beforeLen !== data.streams.length
+  });
+});
+
+app.get("/api/streams/current", (req, res) => {
+  const data = readStore();
+  const current = data.streams.find(s => s.id === data.currentStreamId) || null;
+  res.json({ currentStream: current });
 });
 
 app.listen(PORT, () => {
