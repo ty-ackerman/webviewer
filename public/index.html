@@ -339,6 +339,9 @@
       })();
 
       const POLL_INTERVAL = 30000;
+      const VIEW_STORAGE_KEY = "channel-picker-active-view";
+      const STREAM_SANDBOX_ATTR = "allow-scripts allow-same-origin allow-presentation";
+      const STREAM_IFRAME_ALLOW = "autoplay; encrypted-media; picture-in-picture";
       let pollTimer = null;
       let activeView = "videos";
 
@@ -360,6 +363,48 @@
         return data;
       }
 
+      function persistActiveView(view) {
+        try {
+          localStorage.setItem(VIEW_STORAGE_KEY, view);
+        } catch (err) {
+          console.warn("Unable to store view preference", err);
+        }
+      }
+
+      function loadStoredView() {
+        try {
+          const stored = localStorage.getItem(VIEW_STORAGE_KEY);
+          if (stored === "videos" || stored === "streams") {
+            activeView = stored;
+          }
+        } catch (err) {
+          console.warn("Unable to read view preference", err);
+        }
+      }
+
+      function configureStreamIframe(iframe) {
+        if (!iframe) return;
+        iframe.setAttribute("sandbox", STREAM_SANDBOX_ATTR);
+
+        const existingAllow = iframe.getAttribute("allow") || "";
+        const features = new Set(
+          existingAllow
+            .split(";")
+            .map(item => item.trim())
+            .filter(Boolean)
+        );
+        STREAM_IFRAME_ALLOW.split(";").forEach(item => {
+          const trimmed = item.trim();
+          if (trimmed) features.add(trimmed);
+        });
+        iframe.setAttribute("allow", Array.from(features).join("; "));
+
+        iframe.setAttribute("allowfullscreen", "");
+        if (!iframe.getAttribute("referrerpolicy")) {
+          iframe.setAttribute("referrerpolicy", "no-referrer");
+        }
+      }
+
       function getStatusEl(view) {
         if (view === "streams") return document.getElementById("statusStreams");
         return document.getElementById("statusVideos");
@@ -377,6 +422,14 @@
         const template = document.createElement("template");
         template.innerHTML = html;
         template.content.querySelectorAll("script").forEach(node => node.remove());
+        template.content.querySelectorAll("*").forEach(node => {
+          [...node.attributes].forEach(attr => {
+            if (attr.name.toLowerCase().startsWith("on")) {
+              node.removeAttribute(attr.name);
+            }
+          });
+        });
+        template.content.querySelectorAll("iframe").forEach(configureStreamIframe);
         return template.innerHTML;
       }
 
@@ -413,9 +466,18 @@
         frame.removeAttribute("src");
         frame.classList.add("hiddenFrame");
         streamContainer.classList.remove("hiddenFrame");
+        streamContainer.innerHTML = "";
 
         if (stream) {
-          streamContainer.innerHTML = sanitizeEmbed(stream.embedCode);
+          if (stream.embedSrc) {
+            const iframe = document.createElement("iframe");
+            iframe.src = stream.embedSrc;
+            configureStreamIframe(iframe);
+            streamContainer.appendChild(iframe);
+          } else {
+            streamContainer.innerHTML = sanitizeEmbed(stream.embedCode);
+            streamContainer.querySelectorAll("iframe").forEach(configureStreamIframe);
+          }
           titleEl.textContent = stream.title;
           nowPlayingEl.textContent = stream.title;
         } else {
@@ -823,11 +885,16 @@
       }
 
       function setActiveView(view) {
+        if (view !== "videos" && view !== "streams") {
+          return;
+        }
+
         if (view === activeView) {
           return;
         }
 
         activeView = view;
+        persistActiveView(view);
 
         document.querySelectorAll(".viewTab").forEach(tab => {
           tab.classList.toggle("active", tab.dataset.view === view);
@@ -842,6 +909,7 @@
       }
 
       window.addEventListener("DOMContentLoaded", () => {
+        loadStoredView();
         setupViewTabs();
         setupVideoControls();
         setupStreamControls();
