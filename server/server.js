@@ -38,11 +38,17 @@ function ensureStoreShape(raw) {
   }
 
   if (Array.isArray(raw.streams)) {
-    data.streams = raw.streams;
+    data.streams = raw.streams
+      .map(normalizeStreamEntry)
+      .filter(Boolean);
   }
 
   if (typeof raw.currentStreamId === "string" || raw.currentStreamId === null) {
     data.currentStreamId = raw.currentStreamId;
+  }
+
+  if (data.currentStreamId && !data.streams.find(s => s.id === data.currentStreamId)) {
+    data.currentStreamId = data.streams[0]?.id || null;
   }
 
   return data;
@@ -100,6 +106,28 @@ function guessStreamTitle({ providedTitle, embedCode }) {
   } catch (err) {
     return "Custom Stream";
   }
+}
+
+function normalizeStreamEntry(stream) {
+  if (!stream || typeof stream !== "object") return null;
+
+  const id = typeof stream.id === "string" ? stream.id : null;
+  if (!id) return null;
+
+  const embedCode = typeof stream.embedCode === "string" ? stream.embedCode : "";
+  const embedSrcRaw = typeof stream.embedSrc === "string" ? stream.embedSrc.trim() : "";
+  const resolvedEmbedSrc = embedSrcRaw || extractEmbedSrc(embedCode) || null;
+
+  return {
+    id,
+    title:
+      typeof stream.title === "string" && stream.title.trim()
+        ? stream.title
+        : guessStreamTitle({ providedTitle: "", embedCode }),
+    embedCode,
+    embedSrc: resolvedEmbedSrc,
+    sandboxed: stream.sandboxed !== false
+  };
 }
 
 // fetch a friendly title from YouTube's oEmbed endpoint
@@ -278,7 +306,7 @@ app.get("/api/streams", (req, res) => {
 });
 
 app.post("/api/streams", (req, res) => {
-  const { title, embedCode } = req.body || {};
+  const { title, embedCode, sandboxed } = req.body || {};
 
   if (!embedCode || typeof embedCode !== "string" || !embedCode.trim()) {
     return res.status(400).json({ error: "Missing embedCode" });
@@ -290,12 +318,17 @@ app.post("/api/streams", (req, res) => {
     const embedSrc = extractEmbedSrc(trimmedEmbed);
     const resolvedTitle = guessStreamTitle({ providedTitle: title, embedCode: trimmedEmbed });
 
-    const newStream = {
+    const newStream = normalizeStreamEntry({
       id: makeId(),
       title: resolvedTitle,
       embedCode: trimmedEmbed,
-      embedSrc: embedSrc || null
-    };
+      embedSrc: embedSrc || null,
+      sandboxed: sandboxed !== false
+    });
+
+    if (!newStream) {
+      return res.status(500).json({ error: "Failed to normalize stream." });
+    }
 
     data.streams.push(newStream);
 
@@ -351,6 +384,33 @@ app.get("/api/streams/current", (req, res) => {
   const data = readStore();
   const current = data.streams.find(s => s.id === data.currentStreamId) || null;
   res.json({ currentStream: current });
+});
+
+app.patch("/api/streams/:id", (req, res) => {
+  const { id } = req.params;
+  const { sandboxed } = req.body || {};
+
+  const data = readStore();
+  const stream = data.streams.find(s => s.id === id);
+
+  if (!stream) {
+    return res.status(404).json({ error: "Stream not found" });
+  }
+
+  let mutated = false;
+
+  if (typeof sandboxed === "boolean") {
+    stream.sandboxed = sandboxed;
+    mutated = true;
+  }
+
+  if (!mutated) {
+    return res.status(400).json({ error: "No updates provided" });
+  }
+
+  writeStore(data);
+
+  res.json({ ok: true, stream });
 });
 
 app.listen(PORT, () => {

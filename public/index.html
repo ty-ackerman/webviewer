@@ -239,6 +239,29 @@
         text-transform: uppercase;
       }
 
+      .toggleRow {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: #cfcfcf;
+        margin-bottom: 0.75rem;
+      }
+
+      .toggleRow input[type="checkbox"] {
+        width: 1rem;
+        height: 1rem;
+        background: #000;
+        border: 1px solid #444;
+        border-radius: 3px;
+      }
+
+      .streamInfoLine {
+        font-size: 0.7rem;
+        color: #a0a0a0;
+        margin-top: 0.35rem;
+      }
+
       .videoListItem {
         display: flex;
         flex-wrap: wrap;
@@ -382,9 +405,13 @@
         }
       }
 
-      function configureStreamIframe(iframe) {
+      function configureStreamIframe(iframe, { sandboxed = true } = {}) {
         if (!iframe) return;
-        iframe.setAttribute("sandbox", STREAM_SANDBOX_ATTR);
+        if (sandboxed) {
+          iframe.setAttribute("sandbox", STREAM_SANDBOX_ATTR);
+        } else {
+          iframe.removeAttribute("sandbox");
+        }
 
         const existingAllow = iframe.getAttribute("allow") || "";
         const features = new Set(
@@ -417,7 +444,7 @@
         el.textContent = msg;
       }
 
-      function sanitizeEmbed(html) {
+      function sanitizeEmbed(html, { sandboxed = true } = {}) {
         if (typeof html !== "string") return "";
         const template = document.createElement("template");
         template.innerHTML = html;
@@ -429,7 +456,9 @@
             }
           });
         });
-        template.content.querySelectorAll("iframe").forEach(configureStreamIframe);
+        template.content.querySelectorAll("iframe").forEach(node =>
+          configureStreamIframe(node, { sandboxed })
+        );
         return template.innerHTML;
       }
 
@@ -469,14 +498,17 @@
         streamContainer.innerHTML = "";
 
         if (stream) {
+          const sandboxed = stream.sandboxed !== false;
           if (stream.embedSrc) {
             const iframe = document.createElement("iframe");
             iframe.src = stream.embedSrc;
-            configureStreamIframe(iframe);
+            configureStreamIframe(iframe, { sandboxed });
             streamContainer.appendChild(iframe);
           } else {
-            streamContainer.innerHTML = sanitizeEmbed(stream.embedCode);
-            streamContainer.querySelectorAll("iframe").forEach(configureStreamIframe);
+            streamContainer.innerHTML = sanitizeEmbed(stream.embedCode, { sandboxed });
+            streamContainer.querySelectorAll("iframe").forEach(node =>
+              configureStreamIframe(node, { sandboxed })
+            );
           }
           titleEl.textContent = stream.title;
           nowPlayingEl.textContent = stream.title;
@@ -584,6 +616,13 @@
           meta.appendChild(title);
           meta.appendChild(url);
 
+          const sandboxInfo = document.createElement("div");
+          sandboxInfo.className = "streamInfoLine";
+          sandboxInfo.textContent = stream.sandboxed !== false
+            ? "Popup protection: ON"
+            : "Popup protection: OFF";
+          meta.appendChild(sandboxInfo);
+
           const actions = document.createElement("div");
           actions.className = "actions";
 
@@ -592,12 +631,19 @@
           selectBtn.textContent = "Show";
           selectBtn.onclick = () => selectStream(stream.id);
 
+          const toggleSandboxBtn = document.createElement("button");
+          toggleSandboxBtn.className = "secondary";
+          const sandboxed = stream.sandboxed !== false;
+          toggleSandboxBtn.textContent = sandboxed ? "Allow Popups" : "Block Popups";
+          toggleSandboxBtn.onclick = () => updateStreamSandbox(stream.id, !sandboxed);
+
           const delBtn = document.createElement("button");
           delBtn.className = "deleteBtn";
           delBtn.textContent = "Delete";
           delBtn.onclick = () => deleteStream(stream.id);
 
           actions.appendChild(selectBtn);
+          actions.appendChild(toggleSandboxBtn);
           actions.appendChild(delBtn);
 
           row.appendChild(meta);
@@ -729,8 +775,10 @@
       async function addStream() {
         const titleInput = document.getElementById("newStreamTitle");
         const embedInput = document.getElementById("newStreamEmbed");
+        const sandboxCheckbox = document.getElementById("streamSandboxToggle");
         const title = titleInput.value.trim();
         const embedCode = embedInput.value.trim();
+        const sandboxed = sandboxCheckbox.checked;
 
         if (!embedCode) {
           setStatus("streams", "Please paste an embed snippet.", false);
@@ -743,11 +791,12 @@
           await requestJson("/api/streams", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, embedCode })
+            body: JSON.stringify({ title, embedCode, sandboxed })
           });
 
           titleInput.value = "";
           embedInput.value = "";
+          sandboxCheckbox.checked = true;
           await refreshStreams({ silent: true });
           setStatus("streams", "Stream added and ready.");
           if (activeView === "streams") {
@@ -775,6 +824,35 @@
         } catch (err) {
           console.error(err);
           setStatus("streams", err.message || "Failed to switch stream.", false);
+        }
+      }
+
+      async function updateStreamSandbox(id, sandboxed) {
+        setStatus(
+          "streams",
+          sandboxed ? "Enabling popup protection…" : "Allowing popups for this stream…"
+        );
+        try {
+          await requestJson(`/api/streams/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sandboxed })
+          });
+          await refreshStreams({ silent: true });
+          setStatus(
+            "streams",
+            sandboxed ? "Popup protection enabled." : "Popup protection disabled."
+          );
+          if (activeView === "streams") {
+            updatePlayerForActiveView();
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus(
+            "streams",
+            err.message || "Failed to update popup protection.",
+            false
+          );
         }
       }
 
@@ -989,6 +1067,10 @@
             placeholder="&lt;iframe ...&gt;&lt;/iframe&gt;"
             autocomplete="off"
           ></textarea>
+          <label class="toggleRow" for="streamSandboxToggle">
+            <input type="checkbox" id="streamSandboxToggle" checked />
+            <span>Block popups for this stream (recommended)</span>
+          </label>
           <button id="addStreamBtn">Add Stream</button>
 
           <div class="panelTitle" style="margin-top:1.4rem;">Saved Streams</div>
