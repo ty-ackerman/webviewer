@@ -912,51 +912,6 @@
         }
       }
 
-      async function importLiveStreams({ silent = false } = {}) {
-        if (!silent) {
-          setStatus("streams", "Importing live streams…");
-        }
-
-        try {
-          const data = await requestJson("/api/streams/import-live-now", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
-          });
-
-          if (data.addedCount > 0) {
-            await refreshStreams({ silent: true });
-            if (activeView === "streams") {
-              updatePlayerForActiveView();
-            }
-          }
-
-          if (!silent) {
-            const pieces = [];
-            if (data.addedCount > 0) {
-              pieces.push(`Imported ${data.addedCount} live stream${data.addedCount === 1 ? "" : "s"}`);
-            } else {
-              pieces.push("No new live streams found");
-            }
-
-            if (Array.isArray(data.failures) && data.failures.length) {
-              const sample = data.failures
-                .slice(0, 3)
-                .map(f => f.sourceUrl || "(unknown)")
-                .join(", ");
-              pieces.push(`${data.failures.length} pages failed (sample: ${sample})`);
-            }
-
-            setStatus("streams", pieces.join(". ") + ".", data.addedCount > 0);
-          }
-        } catch (err) {
-          console.error(err);
-          if (!silent) {
-            const serverDetail = err.response && err.response.details ? ` (${err.response.details})` : "";
-            setStatus("streams", (err.message || "Failed to import live streams.") + serverDetail, false);
-          }
-        }
-      }
-
       async function selectStream(id) {
         setStatus("streams", "Switching stream…");
         try {
@@ -1043,9 +998,9 @@
 
         document.getElementById("addStreamBtn").addEventListener("click", addStream);
         document.getElementById("extractStreamBtn").addEventListener("click", extractStreamEmbed);
-        document.getElementById("importLiveBtn").addEventListener("click", () =>
-          importLiveStreams({ silent: false })
-        );
+        document.getElementById("openPpvBtn").addEventListener("click", () => {
+          window.open("https://ppv.to/", "_blank", "noopener");
+        });
 
         const sourceUrlInput = document.getElementById("streamSourceUrl");
         sourceUrlInput.addEventListener("keydown", evt => {
@@ -1150,9 +1105,7 @@
         refreshVideos({ silent: false })
           .catch(() => {})
           .finally(updatePlayerForActiveView);
-        refreshStreams({ silent: true })
-          .catch(() => {})
-          .finally(() => importLiveStreams({ silent: cache.streams.length > 0 }));
+        refreshStreams({ silent: true }).catch(() => {});
       });
     </script>
   </head>
@@ -1223,7 +1176,7 @@
           />
           <div class="buttonRow">
             <button id="extractStreamBtn" class="secondary">Fetch embed from page</button>
-            <button id="importLiveBtn" class="secondary">Import Live Now list</button>
+            <button id="openPpvBtn" class="secondary">Open PPV.to</button>
           </div>
           <label class="toggleRow" for="streamSandboxToggle">
             <input type="checkbox" id="streamSandboxToggle" checked />

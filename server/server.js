@@ -121,14 +121,9 @@ function normalizeStreamEntry(stream) {
   const resolvedEmbedSrc = embedSrcRaw || extractEmbedSrc(embedCode) || null;
   const sourceUrl = typeof stream.sourceUrl === "string" ? stream.sourceUrl.trim() : null;
   const network = typeof stream.network === "string" ? stream.network.trim() : "";
-  const viewersValue = stream.viewers;
-  let viewers = null;
-  if (typeof viewersValue === "number" && Number.isFinite(viewersValue)) {
-    viewers = viewersValue;
-  } else if (typeof viewersValue === "string") {
-    const parsed = parseInt(viewersValue.replace(/[^0-9]/g, ""), 10);
-    viewers = Number.isFinite(parsed) ? parsed : null;
-  }
+  const viewers = typeof stream.viewers === "number" && Number.isFinite(stream.viewers)
+    ? stream.viewers
+    : null;
 
   return {
     id,
@@ -157,8 +152,6 @@ function decodeHtmlEntities(value) {
 }
 
 function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = {}) {
-  const visited = [];
-
   return new Promise((resolve, reject) => {
     function load(urlString, redirectsRemaining) {
       let urlObj;
@@ -183,8 +176,6 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
         }
       };
 
-      console.log("[fetch]", options.method, urlObj.toString());
-
       const req = lib.request(options, res => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           if (redirectsRemaining <= 0) {
@@ -192,13 +183,11 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
             return reject(new Error("Too many redirects"));
           }
           const nextUrl = new URL(res.headers.location, urlObj).toString();
-          visited.push(urlObj.toString());
           res.resume();
           return load(nextUrl, redirectsRemaining - 1);
         }
 
         if (res.statusCode !== 200) {
-          console.warn("[fetch] Non-200 status", res.statusCode, "for", urlObj.toString());
           res.resume();
           return reject(new Error(`Remote responded with status ${res.statusCode}`));
         }
@@ -225,8 +214,7 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
             } else if (encoding.includes("deflate")) {
               decodedBuffer = zlib.inflateSync(buffer);
             }
-          } catch (err) {
-            console.warn("Failed to decompress response", err.message);
+          } catch {
             decodedBuffer = buffer;
           }
 
@@ -234,10 +222,7 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
         });
       });
 
-      req.on("error", err => {
-        console.error("[fetch] Request error", urlObj.toString(), err.message || err);
-        reject(err);
-      });
+      req.on("error", reject);
 
       req.setTimeout(timeout, () => {
         req.destroy(new Error("Request timed out"));
@@ -276,104 +261,6 @@ function extractEmbedFromHtml(html) {
     embedCode: embedCode.trim(),
     title: decodeHtmlEntities(title).trim()
   };
-}
-
-function compactWhitespace(str) {
-  return typeof str === "string" ? str.replace(/\s+/g, " ").trim() : "";
-}
-
-async function fetchLiveNowStreams({ limit = Infinity } = {}) {
-  const baseUrl = "https://ppv.to/";
-  console.log("[live-scraper] Fetching homepage", baseUrl);
-  const homepageHtml = await fetchRemoteDocument(baseUrl);
-
-  const anchors = Array.from(
-    homepageHtml.matchAll(
-      /<a[^>]+class=["'][^"']*item-card[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi
-    )
-  );
-
-  console.log("[live-scraper] Found", anchors.length, "item-card anchors");
-
-  if (!anchors.length) {
-    const sample = homepageHtml.slice(0, 400).replace(/\s+/g, " ");
-    console.warn("[live-scraper] No anchors matched. Document sample:", sample);
-    return {
-      results: [],
-      failures: [
-        {
-          sourceUrl: baseUrl,
-          reason: "no_live_cards",
-          sample
-        }
-      ]
-    };
-  }
-
-  const max = Number.isFinite(limit) ? limit : anchors.length;
-  const cards = anchors.slice(0, max).map((match, idx) => {
-    const href = match[1];
-    const snippet = match[2] || "";
-    const cardTitleMatch = snippet.match(/<h5[^>]*>([\s\S]*?)<\/h5>/i);
-    const cardTitle = decodeHtmlEntities(cardTitleMatch ? cardTitleMatch[1] : "");
-    const networkMatch = snippet.match(
-      /<span[^>]*class=["'][^"']*text-muted[^"']*["'][^>]*>([\s\S]*?)<\/span>/i
-    );
-    const network = decodeHtmlEntities(networkMatch ? networkMatch[1] : "");
-    const viewersMatch = snippet.match(
-      /<span[^>]*class=["'][^"']*float-end[^"']*["'][^>]*>([\s\S]*?)<\/span>/i
-    );
-    const viewersText = decodeHtmlEntities(viewersMatch ? viewersMatch[1] : "");
-    const viewersNumeric = viewersText.replace(/[^0-9]/g, "");
-    const viewers = viewersNumeric ? parseInt(viewersNumeric, 10) : null;
-
-    const absoluteUrl = new URL(href, baseUrl).toString();
-
-    const card = {
-      sourceUrl: absoluteUrl,
-      cardTitle: compactWhitespace(cardTitle),
-      network: compactWhitespace(network),
-      viewers: Number.isFinite(viewers) ? viewers : null
-    };
-    if (idx < 5) {
-      console.log("[live-scraper] Card", idx + 1, card);
-    }
-    return card;
-  });
-
-  const results = [];
-  const failures = [];
-
-  for (const card of cards) {
-    try {
-      console.log("[live-scraper] Fetching stream page", card.sourceUrl);
-      const streamHtml = await fetchRemoteDocument(card.sourceUrl);
-      const { embedCode, title } = extractEmbedFromHtml(streamHtml);
-      if (!embedCode) {
-        console.warn("[live-scraper] No embed found for", card.sourceUrl);
-        failures.push({ sourceUrl: card.sourceUrl, reason: "embed_not_found" });
-        continue;
-      }
-
-      results.push({
-        id: makeId(),
-        title: compactWhitespace(title) || card.cardTitle || "PPV Stream",
-        embedCode,
-        embedSrc: extractEmbedSrc(embedCode),
-        sandboxed: true,
-        sourceUrl: card.sourceUrl,
-        network: card.network,
-        viewers: card.viewers
-      });
-    } catch (err) {
-      console.error("[live-scraper] Failed stream page", card.sourceUrl, err);
-      failures.push({ sourceUrl: card.sourceUrl, reason: err.message || "fetch_failed" });
-    }
-  }
-
-  console.log("[live-scraper] Completed import. Success:", results.length, "Failures:", failures.length);
-
-  return { results, failures };
 }
 
 // fetch a friendly title from YouTube's oEmbed endpoint
@@ -689,64 +576,6 @@ app.post("/api/streams/extract", async (req, res) => {
   } catch (err) {
     console.error("Failed to extract embed from", normalizedUrl, err);
     res.status(500).json({ error: "Failed to fetch embed code." });
-  }
-});
-
-app.post("/api/streams/import-live-now", async (req, res) => {
-  try {
-    const { results: discovered, failures } = await fetchLiveNowStreams();
-
-    const data = readStore();
-    const added = [];
-    const skipped = [];
-
-    discovered.forEach(candidate => {
-      const normalized = normalizeStreamEntry(candidate);
-      if (!normalized) {
-        return;
-      }
-
-      const duplicate = data.streams.find(existing => {
-        if (normalized.embedSrc && existing.embedSrc) {
-          return existing.embedSrc === normalized.embedSrc;
-        }
-        if (normalized.embedCode && existing.embedCode) {
-          return existing.embedCode === normalized.embedCode;
-        }
-        if (normalized.sourceUrl && existing.sourceUrl) {
-          return existing.sourceUrl === normalized.sourceUrl;
-        }
-        return false;
-      });
-
-      if (duplicate) {
-        skipped.push({ id: duplicate.id, sourceUrl: normalized.sourceUrl });
-        return;
-      }
-
-      data.streams.push(normalized);
-      added.push(normalized);
-    });
-
-    if (!data.currentStreamId && added.length) {
-      data.currentStreamId = added[0].id;
-    }
-
-    if (added.length) {
-      writeStore(data);
-    }
-
-    res.json({
-      ok: true,
-      addedCount: added.length,
-      added,
-      skippedCount: skipped.length,
-      skipped,
-      failures
-    });
-  } catch (err) {
-    console.error("Failed to import live streams", err);
-    res.status(500).json({ error: "Failed to import live streams.", details: err.message });
   }
 });
 
