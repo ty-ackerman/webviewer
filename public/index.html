@@ -350,26 +350,47 @@
       }
     </style>
     <script>
-      // Basic popup hardening (legacy behavior retained)
+      // Basic popup hardening with whitelist
       (function () {
         const originalOpen = window.open;
-        window.open = function (...args) {
-          console.warn("Popup blocked:", args);
+        const SAFE_HOSTS = new Set(["ppv.to", "www.ppv.to"]);
+
+        window.open = function (url, ...rest) {
+          try {
+            const parsed = new URL(typeof url === "string" ? url : "", window.location.href);
+            if (SAFE_HOSTS.has(parsed.hostname.toLowerCase())) {
+              return originalOpen.call(window, parsed.toString(), ...rest);
+            }
+          } catch {
+            // fall through to block
+          }
+          console.warn("Popup blocked:", url);
           return null;
         };
 
         document.addEventListener(
           "click",
           function (e) {
-            const t = e.target.closest("a, button");
-            if (
-              t &&
-              (t.target === "_blank" ||
-                (t.rel && t.rel.toLowerCase().includes("popup")))
-            ) {
-              e.preventDefault();
-              console.warn("Blocked popup click:", t.href);
+            const t = e.target.closest("a");
+            if (!t) return;
+
+            const target = (t.target || "").toLowerCase();
+            const rel = (t.rel || "").toLowerCase();
+            if (target !== "_blank" && !rel.includes("popup")) {
+              return;
             }
+
+            try {
+              const parsed = new URL(t.href, window.location.href);
+              if (SAFE_HOSTS.has(parsed.hostname.toLowerCase())) {
+                return; // allow safe host popups
+              }
+            } catch {
+              // fall through
+            }
+
+            e.preventDefault();
+            console.warn("Blocked popup click:", t.href);
           },
           true
         );
