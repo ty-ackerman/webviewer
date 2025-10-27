@@ -925,20 +925,34 @@
 
           if (data.addedCount > 0) {
             await refreshStreams({ silent: true });
-            setStatus(
-              "streams",
-              `Imported ${data.addedCount} live stream${data.addedCount === 1 ? "" : "s"}.`
-            );
             if (activeView === "streams") {
               updatePlayerForActiveView();
             }
-          } else if (!silent) {
-            setStatus("streams", "No new live streams found.");
+          }
+
+          if (!silent) {
+            const pieces = [];
+            if (data.addedCount > 0) {
+              pieces.push(`Imported ${data.addedCount} live stream${data.addedCount === 1 ? "" : "s"}`);
+            } else {
+              pieces.push("No new live streams found");
+            }
+
+            if (Array.isArray(data.failures) && data.failures.length) {
+              const sample = data.failures
+                .slice(0, 3)
+                .map(f => f.sourceUrl || "(unknown)")
+                .join(", ");
+              pieces.push(`${data.failures.length} pages failed (sample: ${sample})`);
+            }
+
+            setStatus("streams", pieces.join(". ") + ".", data.addedCount > 0);
           }
         } catch (err) {
           console.error(err);
           if (!silent) {
-            setStatus("streams", err.message || "Failed to import live streams.", false);
+            const serverDetail = err.response && err.response.details ? ` (${err.response.details})` : "";
+            setStatus("streams", (err.message || "Failed to import live streams.") + serverDetail, false);
           }
         }
       }

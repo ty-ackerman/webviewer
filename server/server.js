@@ -183,6 +183,8 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
         }
       };
 
+      console.log("[fetch]", options.method, urlObj.toString());
+
       const req = lib.request(options, res => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           if (redirectsRemaining <= 0) {
@@ -196,6 +198,7 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
         }
 
         if (res.statusCode !== 200) {
+          console.warn("[fetch] Non-200 status", res.statusCode, "for", urlObj.toString());
           res.resume();
           return reject(new Error(`Remote responded with status ${res.statusCode}`));
         }
@@ -232,6 +235,7 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
       });
 
       req.on("error", err => {
+        console.error("[fetch] Request error", urlObj.toString(), err.message || err);
         reject(err);
       });
 
@@ -280,6 +284,7 @@ function compactWhitespace(str) {
 
 async function fetchLiveNowStreams({ limit = Infinity } = {}) {
   const baseUrl = "https://ppv.to/";
+  console.log("[live-scraper] Fetching homepage", baseUrl);
   const homepageHtml = await fetchRemoteDocument(baseUrl);
 
   const anchors = Array.from(
@@ -288,12 +293,16 @@ async function fetchLiveNowStreams({ limit = Infinity } = {}) {
     )
   );
 
+  console.log("[live-scraper] Found", anchors.length, "item-card anchors");
+
   if (!anchors.length) {
+    const sample = homepageHtml.slice(0, 400).replace(/\s+/g, " ");
+    console.warn("[live-scraper] No anchors matched. Document sample:", sample);
     return [];
   }
 
   const max = Number.isFinite(limit) ? limit : anchors.length;
-  const cards = anchors.slice(0, max).map(match => {
+  const cards = anchors.slice(0, max).map((match, idx) => {
     const href = match[1];
     const snippet = match[2] || "";
     const cardTitleMatch = snippet.match(/<h5[^>]*>([\s\S]*?)<\/h5>/i);
@@ -311,21 +320,29 @@ async function fetchLiveNowStreams({ limit = Infinity } = {}) {
 
     const absoluteUrl = new URL(href, baseUrl).toString();
 
-    return {
+    const card = {
       sourceUrl: absoluteUrl,
       cardTitle: compactWhitespace(cardTitle),
       network: compactWhitespace(network),
       viewers: Number.isFinite(viewers) ? viewers : null
     };
+    if (idx < 5) {
+      console.log("[live-scraper] Card", idx + 1, card);
+    }
+    return card;
   });
 
   const results = [];
+  const failures = [];
 
   for (const card of cards) {
     try {
+      console.log("[live-scraper] Fetching stream page", card.sourceUrl);
       const streamHtml = await fetchRemoteDocument(card.sourceUrl);
       const { embedCode, title } = extractEmbedFromHtml(streamHtml);
       if (!embedCode) {
+        console.warn("[live-scraper] No embed found for", card.sourceUrl);
+        failures.push({ sourceUrl: card.sourceUrl, reason: "embed_not_found" });
         continue;
       }
 
@@ -340,11 +357,14 @@ async function fetchLiveNowStreams({ limit = Infinity } = {}) {
         viewers: card.viewers
       });
     } catch (err) {
-      console.error("Failed to fetch stream page", card.sourceUrl, err);
+      console.error("[live-scraper] Failed stream page", card.sourceUrl, err);
+      failures.push({ sourceUrl: card.sourceUrl, reason: err.message || "fetch_failed" });
     }
   }
 
-  return results;
+  console.log("[live-scraper] Completed import. Success:", results.length, "Failures:", failures.length);
+
+  return { results, failures };
 }
 
 // fetch a friendly title from YouTube's oEmbed endpoint
@@ -665,7 +685,7 @@ app.post("/api/streams/extract", async (req, res) => {
 
 app.post("/api/streams/import-live-now", async (req, res) => {
   try {
-    const discovered = await fetchLiveNowStreams();
+    const { results: discovered, failures } = await fetchLiveNowStreams();
 
     const data = readStore();
     const added = [];
@@ -707,10 +727,17 @@ app.post("/api/streams/import-live-now", async (req, res) => {
       writeStore(data);
     }
 
-    res.json({ ok: true, addedCount: added.length, added, skippedCount: skipped.length });
+    res.json({
+      ok: true,
+      addedCount: added.length,
+      added,
+      skippedCount: skipped.length,
+      skipped,
+      failures
+    });
   } catch (err) {
     console.error("Failed to import live streams", err);
-    res.status(500).json({ error: "Failed to import live streams." });
+    res.status(500).json({ error: "Failed to import live streams.", details: err.message });
   }
 });
 
