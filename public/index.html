@@ -1138,7 +1138,7 @@
           .finally(updatePlayerForActiveView);
         refreshStreams({ silent: true })
           .catch(() => {})
-          .finally(() => importLiveStreams({ silent: true }));
+          .finally(() => importLiveStreams({ silent: cache.streams.length > 0 }));
       });
     </script>
   </head>

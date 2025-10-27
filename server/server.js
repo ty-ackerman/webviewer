@@ -4,6 +4,7 @@ const path = require("path");
 const cors = require("cors");
 const https = require("https");
 const http = require("http");
+const zlib = require("zlib");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -176,7 +177,9 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
         headers: {
           "User-Agent":
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
-          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.8",
+          "Accept-Encoding": "gzip, deflate, br"
         }
       };
 
@@ -197,15 +200,35 @@ function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = 
           return reject(new Error(`Remote responded with status ${res.statusCode}`));
         }
 
-        let body = "";
-        res.setEncoding("utf8");
+        const chunks = [];
+        let totalLength = 0;
         res.on("data", chunk => {
-          body += chunk;
-          if (body.length > 2_000_000) {
+          chunks.push(chunk);
+          totalLength += chunk.length;
+          if (totalLength > 2_000_000) {
             req.destroy(new Error("Document too large"));
           }
         });
-        res.on("end", () => resolve(body));
+        res.on("end", () => {
+          const buffer = Buffer.concat(chunks);
+          const encoding = (res.headers["content-encoding"] || "").toLowerCase();
+          let decodedBuffer = buffer;
+
+          try {
+            if (encoding.includes("br")) {
+              decodedBuffer = zlib.brotliDecompressSync(buffer);
+            } else if (encoding.includes("gzip")) {
+              decodedBuffer = zlib.gunzipSync(buffer);
+            } else if (encoding.includes("deflate")) {
+              decodedBuffer = zlib.inflateSync(buffer);
+            }
+          } catch (err) {
+            console.warn("Failed to decompress response", err.message);
+            decodedBuffer = buffer;
+          }
+
+          resolve(decodedBuffer.toString("utf8"));
+        });
       });
 
       req.on("error", err => {
@@ -255,7 +278,7 @@ function compactWhitespace(str) {
   return typeof str === "string" ? str.replace(/\s+/g, " ").trim() : "";
 }
 
-async function fetchLiveNowStreams({ limit = 12 } = {}) {
+async function fetchLiveNowStreams({ limit = Infinity } = {}) {
   const baseUrl = "https://ppv.to/";
   const homepageHtml = await fetchRemoteDocument(baseUrl);
 
@@ -269,7 +292,8 @@ async function fetchLiveNowStreams({ limit = 12 } = {}) {
     return [];
   }
 
-  const cards = anchors.slice(0, limit).map(match => {
+  const max = Number.isFinite(limit) ? limit : anchors.length;
+  const cards = anchors.slice(0, max).map(match => {
     const href = match[1];
     const snippet = match[2] || "";
     const cardTitleMatch = snippet.match(/<h5[^>]*>([\s\S]*?)<\/h5>/i);
@@ -642,10 +666,6 @@ app.post("/api/streams/extract", async (req, res) => {
 app.post("/api/streams/import-live-now", async (req, res) => {
   try {
     const discovered = await fetchLiveNowStreams();
-
-    if (!discovered.length) {
-      return res.status(404).json({ error: "No live streams found." });
-    }
 
     const data = readStore();
     const added = [];
