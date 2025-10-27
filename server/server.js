@@ -298,7 +298,16 @@ async function fetchLiveNowStreams({ limit = Infinity } = {}) {
   if (!anchors.length) {
     const sample = homepageHtml.slice(0, 400).replace(/\s+/g, " ");
     console.warn("[live-scraper] No anchors matched. Document sample:", sample);
-    return [];
+    return {
+      results: [],
+      failures: [
+        {
+          sourceUrl: baseUrl,
+          reason: "no_live_cards",
+          sample
+        }
+      ]
+    };
   }
 
   const max = Number.isFinite(limit) ? limit : anchors.length;
