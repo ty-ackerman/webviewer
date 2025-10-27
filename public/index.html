@@ -246,6 +246,13 @@
         margin-bottom: 0.8rem;
       }
 
+      .buttonRow {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.75rem;
+      }
+
       .toggleRow {
         display: flex;
         align-items: center;
@@ -646,6 +653,28 @@
           meta.appendChild(title);
           meta.appendChild(url);
 
+          if (stream.network || Number.isFinite(stream.viewers)) {
+            const details = document.createElement("div");
+            details.className = "streamInfoLine";
+            const parts = [];
+            if (stream.network) parts.push(stream.network);
+            if (Number.isFinite(stream.viewers)) parts.push(`${stream.viewers} watching`);
+            details.textContent = parts.join(" · ");
+            meta.appendChild(details);
+          }
+
+          if (stream.sourceUrl) {
+            const srcLine = document.createElement("div");
+            srcLine.className = "streamInfoLine";
+            try {
+              const parsed = new URL(stream.sourceUrl);
+              srcLine.textContent = `Source: ${parsed.pathname}`;
+            } catch {
+              srcLine.textContent = `Source: ${stream.sourceUrl}`;
+            }
+            meta.appendChild(srcLine);
+          }
+
           const sandboxInfo = document.createElement("div");
           sandboxInfo.className = "streamInfoLine";
           sandboxInfo.textContent = stream.sandboxed !== false
@@ -883,6 +912,37 @@
         }
       }
 
+      async function importLiveStreams({ silent = false } = {}) {
+        if (!silent) {
+          setStatus("streams", "Importing live streams…");
+        }
+
+        try {
+          const data = await requestJson("/api/streams/import-live-now", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+          });
+
+          if (data.addedCount > 0) {
+            await refreshStreams({ silent: true });
+            setStatus(
+              "streams",
+              `Imported ${data.addedCount} live stream${data.addedCount === 1 ? "" : "s"}.`
+            );
+            if (activeView === "streams") {
+              updatePlayerForActiveView();
+            }
+          } else if (!silent) {
+            setStatus("streams", "No new live streams found.");
+          }
+        } catch (err) {
+          console.error(err);
+          if (!silent) {
+            setStatus("streams", err.message || "Failed to import live streams.", false);
+          }
+        }
+      }
+
       async function selectStream(id) {
         setStatus("streams", "Switching stream…");
         try {
@@ -969,6 +1029,9 @@
 
         document.getElementById("addStreamBtn").addEventListener("click", addStream);
         document.getElementById("extractStreamBtn").addEventListener("click", extractStreamEmbed);
+        document.getElementById("importLiveBtn").addEventListener("click", () =>
+          importLiveStreams({ silent: false })
+        );
 
         const sourceUrlInput = document.getElementById("streamSourceUrl");
         sourceUrlInput.addEventListener("keydown", evt => {
@@ -1073,7 +1136,9 @@
         refreshVideos({ silent: false })
           .catch(() => {})
           .finally(updatePlayerForActiveView);
-        refreshStreams({ silent: true }).catch(() => {});
+        refreshStreams({ silent: true })
+          .catch(() => {})
+          .finally(() => importLiveStreams({ silent: true }));
       });
     </script>
   </head>
@@ -1142,7 +1207,10 @@
             placeholder="https://example.com/live/some-channel"
             autocomplete="off"
           />
-          <button id="extractStreamBtn" class="secondary">Fetch embed from page</button>
+          <div class="buttonRow">
+            <button id="extractStreamBtn" class="secondary">Fetch embed from page</button>
+            <button id="importLiveBtn" class="secondary">Import Live Now list</button>
+          </div>
           <label class="toggleRow" for="streamSandboxToggle">
             <input type="checkbox" id="streamSandboxToggle" checked />
             <span>Block popups for this stream (recommended)</span>

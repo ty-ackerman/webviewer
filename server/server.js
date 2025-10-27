@@ -118,6 +118,16 @@ function normalizeStreamEntry(stream) {
   const embedCode = typeof stream.embedCode === "string" ? stream.embedCode : "";
   const embedSrcRaw = typeof stream.embedSrc === "string" ? stream.embedSrc.trim() : "";
   const resolvedEmbedSrc = embedSrcRaw || extractEmbedSrc(embedCode) || null;
+  const sourceUrl = typeof stream.sourceUrl === "string" ? stream.sourceUrl.trim() : null;
+  const network = typeof stream.network === "string" ? stream.network.trim() : "";
+  const viewersValue = stream.viewers;
+  let viewers = null;
+  if (typeof viewersValue === "number" && Number.isFinite(viewersValue)) {
+    viewers = viewersValue;
+  } else if (typeof viewersValue === "string") {
+    const parsed = parseInt(viewersValue.replace(/[^0-9]/g, ""), 10);
+    viewers = Number.isFinite(parsed) ? parsed : null;
+  }
 
   return {
     id,
@@ -127,7 +137,10 @@ function normalizeStreamEntry(stream) {
         : guessStreamTitle({ providedTitle: "", embedCode }),
     embedCode,
     embedSrc: resolvedEmbedSrc,
-    sandboxed: stream.sandboxed !== false
+    sandboxed: stream.sandboxed !== false,
+    sourceUrl,
+    network,
+    viewers
   };
 }
 
@@ -236,6 +249,78 @@ function extractEmbedFromHtml(html) {
     embedCode: embedCode.trim(),
     title: decodeHtmlEntities(title).trim()
   };
+}
+
+function compactWhitespace(str) {
+  return typeof str === "string" ? str.replace(/\s+/g, " ").trim() : "";
+}
+
+async function fetchLiveNowStreams({ limit = 12 } = {}) {
+  const baseUrl = "https://ppv.to/";
+  const homepageHtml = await fetchRemoteDocument(baseUrl);
+
+  const anchors = Array.from(
+    homepageHtml.matchAll(
+      /<a[^>]+class=["'][^"']*item-card[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi
+    )
+  );
+
+  if (!anchors.length) {
+    return [];
+  }
+
+  const cards = anchors.slice(0, limit).map(match => {
+    const href = match[1];
+    const snippet = match[2] || "";
+    const cardTitleMatch = snippet.match(/<h5[^>]*>([\s\S]*?)<\/h5>/i);
+    const cardTitle = decodeHtmlEntities(cardTitleMatch ? cardTitleMatch[1] : "");
+    const networkMatch = snippet.match(
+      /<span[^>]*class=["'][^"']*text-muted[^"']*["'][^>]*>([\s\S]*?)<\/span>/i
+    );
+    const network = decodeHtmlEntities(networkMatch ? networkMatch[1] : "");
+    const viewersMatch = snippet.match(
+      /<span[^>]*class=["'][^"']*float-end[^"']*["'][^>]*>([\s\S]*?)<\/span>/i
+    );
+    const viewersText = decodeHtmlEntities(viewersMatch ? viewersMatch[1] : "");
+    const viewersNumeric = viewersText.replace(/[^0-9]/g, "");
+    const viewers = viewersNumeric ? parseInt(viewersNumeric, 10) : null;
+
+    const absoluteUrl = new URL(href, baseUrl).toString();
+
+    return {
+      sourceUrl: absoluteUrl,
+      cardTitle: compactWhitespace(cardTitle),
+      network: compactWhitespace(network),
+      viewers: Number.isFinite(viewers) ? viewers : null
+    };
+  });
+
+  const results = [];
+
+  for (const card of cards) {
+    try {
+      const streamHtml = await fetchRemoteDocument(card.sourceUrl);
+      const { embedCode, title } = extractEmbedFromHtml(streamHtml);
+      if (!embedCode) {
+        continue;
+      }
+
+      results.push({
+        id: makeId(),
+        title: compactWhitespace(title) || card.cardTitle || "PPV Stream",
+        embedCode,
+        embedSrc: extractEmbedSrc(embedCode),
+        sandboxed: true,
+        sourceUrl: card.sourceUrl,
+        network: card.network,
+        viewers: card.viewers
+      });
+    } catch (err) {
+      console.error("Failed to fetch stream page", card.sourceUrl, err);
+    }
+  }
+
+  return results;
 }
 
 // fetch a friendly title from YouTube's oEmbed endpoint
@@ -551,6 +636,61 @@ app.post("/api/streams/extract", async (req, res) => {
   } catch (err) {
     console.error("Failed to extract embed from", normalizedUrl, err);
     res.status(500).json({ error: "Failed to fetch embed code." });
+  }
+});
+
+app.post("/api/streams/import-live-now", async (req, res) => {
+  try {
+    const discovered = await fetchLiveNowStreams();
+
+    if (!discovered.length) {
+      return res.status(404).json({ error: "No live streams found." });
+    }
+
+    const data = readStore();
+    const added = [];
+    const skipped = [];
+
+    discovered.forEach(candidate => {
+      const normalized = normalizeStreamEntry(candidate);
+      if (!normalized) {
+        return;
+      }
+
+      const duplicate = data.streams.find(existing => {
+        if (normalized.embedSrc && existing.embedSrc) {
+          return existing.embedSrc === normalized.embedSrc;
+        }
+        if (normalized.embedCode && existing.embedCode) {
+          return existing.embedCode === normalized.embedCode;
+        }
+        if (normalized.sourceUrl && existing.sourceUrl) {
+          return existing.sourceUrl === normalized.sourceUrl;
+        }
+        return false;
+      });
+
+      if (duplicate) {
+        skipped.push({ id: duplicate.id, sourceUrl: normalized.sourceUrl });
+        return;
+      }
+
+      data.streams.push(normalized);
+      added.push(normalized);
+    });
+
+    if (!data.currentStreamId && added.length) {
+      data.currentStreamId = added[0].id;
+    }
+
+    if (added.length) {
+      writeStore(data);
+    }
+
+    res.json({ ok: true, addedCount: added.length, added, skippedCount: skipped.length });
+  } catch (err) {
+    console.error("Failed to import live streams", err);
+    res.status(500).json({ error: "Failed to import live streams." });
   }
 });
 
