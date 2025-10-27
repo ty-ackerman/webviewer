@@ -239,6 +239,13 @@
         text-transform: uppercase;
       }
 
+      .helperText {
+        font-size: 0.72rem;
+        color: #9a9a9a;
+        margin-top: -0.3rem;
+        margin-bottom: 0.8rem;
+      }
+
       .toggleRow {
         display: flex;
         align-items: center;
@@ -819,6 +826,10 @@
 
           titleInput.value = "";
           embedInput.value = "";
+          const sourceUrlInput = document.getElementById("streamSourceUrl");
+          if (sourceUrlInput) {
+            sourceUrlInput.value = "";
+          }
           sandboxCheckbox.checked = true;
           await refreshStreams({ silent: true });
           setStatus("streams", "Stream added and ready.");
@@ -828,6 +839,47 @@
         } catch (err) {
           console.error(err);
           setStatus("streams", err.message || "Failed to add stream.", false);
+        }
+      }
+
+      function populateStreamForm({ embedCode, title }) {
+        if (typeof embedCode === "string") {
+          document.getElementById("newStreamEmbed").value = embedCode;
+        }
+        if (typeof title === "string" && title.trim()) {
+          document.getElementById("newStreamTitle").value = title.trim();
+        }
+      }
+
+      async function extractStreamEmbed() {
+        const urlInput = document.getElementById("streamSourceUrl");
+        const rawUrl = urlInput.value.trim();
+
+        if (!rawUrl) {
+          setStatus("streams", "Paste a stream page URL first.", false);
+          return;
+        }
+
+        setStatus("streams", "Fetching embed code…");
+
+        try {
+          const data = await requestJson("/api/streams/extract", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url: rawUrl })
+          });
+
+          const embedCode = data.embedCode ? data.embedCode.trim() : "";
+          populateStreamForm({ embedCode, title: data.title });
+
+          if (embedCode) {
+            setStatus("streams", "Embed code fetched. Review then save.");
+          } else {
+            setStatus("streams", "No embed code detected in that page.", false);
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus("streams", err.message || "Failed to fetch embed code.", false);
         }
       }
 
@@ -916,6 +968,15 @@
         });
 
         document.getElementById("addStreamBtn").addEventListener("click", addStream);
+        document.getElementById("extractStreamBtn").addEventListener("click", extractStreamEmbed);
+
+        const sourceUrlInput = document.getElementById("streamSourceUrl");
+        sourceUrlInput.addEventListener("keydown", evt => {
+          if (evt.key === "Enter") {
+            evt.preventDefault();
+            extractStreamEmbed();
+          }
+        });
       }
 
       function setupCommonControls() {
@@ -1074,6 +1135,14 @@
             placeholder="&lt;iframe ...&gt;&lt;/iframe&gt;"
             autocomplete="off"
           ></textarea>
+          <div class="helperText">Paste the embed snippet directly or fetch it from a stream page.</div>
+          <input
+            id="streamSourceUrl"
+            type="text"
+            placeholder="https://example.com/live/some-channel"
+            autocomplete="off"
+          />
+          <button id="extractStreamBtn" class="secondary">Fetch embed from page</button>
           <label class="toggleRow" for="streamSandboxToggle">
             <input type="checkbox" id="streamSandboxToggle" checked />
             <span>Block popups for this stream (recommended)</span>

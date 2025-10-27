@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const https = require("https");
+const http = require("http");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -127,6 +128,113 @@ function normalizeStreamEntry(stream) {
     embedCode,
     embedSrc: resolvedEmbedSrc,
     sandboxed: stream.sandboxed !== false
+  };
+}
+
+function decodeHtmlEntities(value) {
+  if (typeof value !== "string") return "";
+  return value
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'");
+}
+
+function fetchRemoteDocument(targetUrl, { maxRedirects = 4, timeout = 10000 } = {}) {
+  const visited = [];
+
+  return new Promise((resolve, reject) => {
+    function load(urlString, redirectsRemaining) {
+      let urlObj;
+      try {
+        urlObj = new URL(urlString);
+      } catch (err) {
+        return reject(new Error("Invalid URL."));
+      }
+
+      const lib = urlObj.protocol === "https:" ? https : http;
+      const options = {
+        hostname: urlObj.hostname,
+        path: urlObj.pathname + urlObj.search,
+        port: urlObj.port || (urlObj.protocol === "https:" ? 443 : 80),
+        method: "GET",
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+        }
+      };
+
+      const req = lib.request(options, res => {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          if (redirectsRemaining <= 0) {
+            res.resume();
+            return reject(new Error("Too many redirects"));
+          }
+          const nextUrl = new URL(res.headers.location, urlObj).toString();
+          visited.push(urlObj.toString());
+          res.resume();
+          return load(nextUrl, redirectsRemaining - 1);
+        }
+
+        if (res.statusCode !== 200) {
+          res.resume();
+          return reject(new Error(`Remote responded with status ${res.statusCode}`));
+        }
+
+        let body = "";
+        res.setEncoding("utf8");
+        res.on("data", chunk => {
+          body += chunk;
+          if (body.length > 2_000_000) {
+            req.destroy(new Error("Document too large"));
+          }
+        });
+        res.on("end", () => resolve(body));
+      });
+
+      req.on("error", err => {
+        reject(err);
+      });
+
+      req.setTimeout(timeout, () => {
+        req.destroy(new Error("Request timed out"));
+      });
+
+      req.end();
+    }
+
+    load(targetUrl, maxRedirects);
+  });
+}
+
+function extractEmbedFromHtml(html) {
+  if (typeof html !== "string" || !html.trim()) {
+    return { embedCode: "", title: "" };
+  }
+
+  const textareaMatch = html.match(/<textarea[^>]*id=["']embedcode["'][^>]*>([\s\S]*?)<\/textarea>/i);
+  let embedCode = textareaMatch ? textareaMatch[1].trim() : "";
+  embedCode = decodeHtmlEntities(embedCode);
+
+  if (!embedCode) {
+    const iframeMatch = html.match(/<iframe[^>]+src=["'][^"']+["'][^>]*><\/iframe>/i);
+    embedCode = iframeMatch ? decodeHtmlEntities(iframeMatch[0]) : "";
+  }
+
+  const ogTitleMatch = html.match(/<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/i);
+  let title = ogTitleMatch ? ogTitleMatch[1] : "";
+
+  if (!title) {
+    const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    title = titleMatch ? titleMatch[1] : "";
+  }
+
+  return {
+    embedCode: embedCode.trim(),
+    title: decodeHtmlEntities(title).trim()
   };
 }
 
@@ -411,6 +519,39 @@ app.patch("/api/streams/:id", (req, res) => {
   writeStore(data);
 
   res.json({ ok: true, stream });
+});
+
+app.post("/api/streams/extract", async (req, res) => {
+  const { url } = req.body || {};
+
+  if (typeof url !== "string" || !url.trim()) {
+    return res.status(400).json({ error: "Missing url" });
+  }
+
+  let normalizedUrl;
+  try {
+    const parsed = new URL(url.trim());
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      return res.status(400).json({ error: "URL must be http or https." });
+    }
+    normalizedUrl = parsed.toString();
+  } catch (err) {
+    return res.status(400).json({ error: "Invalid URL." });
+  }
+
+  try {
+    const html = await fetchRemoteDocument(normalizedUrl);
+    const { embedCode, title } = extractEmbedFromHtml(html);
+
+    if (!embedCode) {
+      return res.status(404).json({ error: "Embed code not found on that page." });
+    }
+
+    res.json({ ok: true, embedCode, title });
+  } catch (err) {
+    console.error("Failed to extract embed from", normalizedUrl, err);
+    res.status(500).json({ error: "Failed to fetch embed code." });
+  }
 });
 
 app.listen(PORT, () => {
