@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const https = require("https");
 const {
   getTeamName,
   generateEmbedUrl,
@@ -46,34 +47,83 @@ function getEffectiveDateET() {
 }
 
 /**
- * Load schedule from JSON file
+ * Fetch schedule via HTTP (for Netlify Functions where file system access is limited)
  */
-function loadSchedule() {
-  try {
-    // In Netlify Functions, we need to read from the published site
-    // The file will be at the root of the publish directory
-    const possiblePaths = [
-      path.join(__dirname, "../../public/data/nba-schedule.json"),
-      path.join(process.cwd(), "public/data/nba-schedule.json"),
-      "/var/task/public/data/nba-schedule.json",
-    ];
-
-    for (const filePath of possiblePaths) {
-      try {
-        if (fs.existsSync(filePath)) {
-          const content = fs.readFileSync(filePath, "utf-8");
-          return JSON.parse(content);
-        }
-      } catch (e) {
-        // Try next path
+function fetchScheduleHttp(siteUrl) {
+  return new Promise((resolve, reject) => {
+    const url = `${siteUrl}/data/nba-schedule.json`;
+    console.log("Fetching schedule from:", url);
+    
+    https.get(url, (res) => {
+      if (res.statusCode !== 200) {
+        reject(new Error(`HTTP ${res.statusCode}`));
+        res.resume();
+        return;
       }
-    }
+      
+      let data = "";
+      res.on("data", (chunk) => { data += chunk; });
+      res.on("end", () => {
+        try {
+          resolve(JSON.parse(data));
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }).on("error", reject);
+  });
+}
 
-    return { season: "", games: [] };
-  } catch (err) {
-    console.error("Error loading schedule:", err);
-    return { season: "", games: [] };
+/**
+ * Load schedule from JSON file
+ * In Netlify Functions with included_files, files are bundled with the function
+ */
+function loadScheduleFromFile() {
+  const possiblePaths = [
+    // Netlify Functions with included_files - relative to function
+    path.join(__dirname, "public/data/nba-schedule.json"),
+    // Alternative paths for different environments
+    path.join(process.cwd(), "public/data/nba-schedule.json"),
+    path.join(__dirname, "../../public/data/nba-schedule.json"),
+    "/var/task/public/data/nba-schedule.json",
+  ];
+
+  for (const filePath of possiblePaths) {
+    try {
+      if (fs.existsSync(filePath)) {
+        console.log("Found schedule at:", filePath);
+        const content = fs.readFileSync(filePath, "utf-8");
+        return JSON.parse(content);
+      }
+    } catch (e) {
+      console.log("Failed to read from:", filePath, e.message);
+    }
   }
+
+  return null;
+}
+
+/**
+ * Load schedule - tries file first, then HTTP fallback
+ */
+async function loadSchedule(siteUrl) {
+  // Try file system first
+  const fromFile = loadScheduleFromFile();
+  if (fromFile) {
+    return fromFile;
+  }
+
+  // Fallback to HTTP if we have a site URL
+  if (siteUrl) {
+    try {
+      return await fetchScheduleHttp(siteUrl);
+    } catch (e) {
+      console.error("HTTP fetch failed:", e.message);
+    }
+  }
+
+  console.error("Could not load schedule from any source");
+  return { season: "", games: [] };
 }
 
 exports.handler = async (event) => {
@@ -97,7 +147,12 @@ exports.handler = async (event) => {
   }
 
   try {
-    const schedule = loadSchedule();
+    // Get site URL from headers for HTTP fallback
+    const host = event.headers.host || event.headers.Host;
+    const protocol = host?.includes("localhost") ? "http" : "https";
+    const siteUrl = host ? `${protocol}://${host}` : null;
+    
+    const schedule = await loadSchedule(siteUrl);
     const today = getEffectiveDateET();
 
     // Allow override via query param for testing

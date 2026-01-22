@@ -4,6 +4,9 @@
 
 [functions]
   node_bundler = "esbuild"
+  
+[functions."nba-today"]
+  included_files = ["public/data/nba-schedule.json"]
 
 # Redirect API calls to Netlify Functions
 [[redirects]]
