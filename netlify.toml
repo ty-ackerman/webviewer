@@ -1,0 +1,57 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirect API calls to Netlify Functions
+[[redirects]]
+  from = "/api/videos"
+  to = "/.netlify/functions/videos"
+  status = 200
+
+[[redirects]]
+  from = "/api/videos/:id"
+  to = "/.netlify/functions/videos-delete?id=:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/select"
+  to = "/.netlify/functions/videos-select"
+  status = 200
+
+[[redirects]]
+  from = "/api/current"
+  to = "/.netlify/functions/videos-current"
+  status = 200
+
+[[redirects]]
+  from = "/api/streams"
+  to = "/.netlify/functions/streams"
+  status = 200
+
+[[redirects]]
+  from = "/api/streams/select"
+  to = "/.netlify/functions/streams-select"
+  status = 200
+
+[[redirects]]
+  from = "/api/streams/current"
+  to = "/.netlify/functions/streams-current"
+  status = 200
+
+[[redirects]]
+  from = "/api/streams/extract"
+  to = "/.netlify/functions/streams-extract"
+  status = 200
+
+[[redirects]]
+  from = "/api/streams/:id"
+  to = "/.netlify/functions/streams-manage?id=:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/nba-today"
+  to = "/.netlify/functions/nba-today"
+  status = 200

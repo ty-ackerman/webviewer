@@ -1,0 +1,4661 @@
+{
+  "season": "2025-26",
+  "games": [
+    {
+      "date": "2026-01-21",
+      "time": "19:00",
+      "home": "cha",
+      "away": "cle",
+      "location": "Charlotte, NC",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-21",
+      "time": "19:30",
+      "home": "bos",
+      "away": "ind",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-21",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "bkn",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-21",
+      "time": "20:00",
+      "home": "mem",
+      "away": "atl",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-21",
+      "time": "20:00",
+      "home": "nop",
+      "away": "det",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-21",
+      "time": "21:30",
+      "home": "mil",
+      "away": "okc",
+      "location": "Milwaukee, WI",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-21",
+      "time": "22:00",
+      "home": "sac",
+      "away": "tor",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "19:00",
+      "home": "orl",
+      "away": "cha",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "19:00",
+      "home": "phi",
+      "away": "hou",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "19:00",
+      "home": "was",
+      "away": "den",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "19:30",
+      "home": "dal",
+      "away": "gsw",
+      "location": "Dallas, TX",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "20:00",
+      "home": "min",
+      "away": "chi",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "21:00",
+      "home": "uta",
+      "away": "sas",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "22:00",
+      "home": "lac",
+      "away": "lal",
+      "location": "Inglewood, CA",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-22",
+      "time": "22:00",
+      "home": "por",
+      "away": "mia",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "19:00",
+      "home": "det",
+      "away": "hou",
+      "location": "Detroit, MI",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "19:30",
+      "home": "atl",
+      "away": "phx",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "bos",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "19:30",
+      "home": "cle",
+      "away": "sac",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "20:00",
+      "home": "mem",
+      "away": "nop",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "20:00",
+      "home": "okc",
+      "away": "ind",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "21:30",
+      "home": "mil",
+      "away": "den",
+      "location": "Milwaukee, WI",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-23",
+      "time": "22:00",
+      "home": "por",
+      "away": "tor",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "15:00",
+      "home": "phi",
+      "away": "nyk",
+      "location": "Philadelphia, PA",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "17:30",
+      "home": "min",
+      "away": "gsw",
+      "location": "Minneapolis, MN",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "18:00",
+      "home": "cha",
+      "away": "was",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "19:00",
+      "home": "orl",
+      "away": "cle",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "20:00",
+      "home": "chi",
+      "away": "bos",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "20:30",
+      "home": "dal",
+      "away": "lal",
+      "location": "Dallas, TX",
+      "label": "AWS NBA Rivals Week"
+    },
+    {
+      "date": "2026-01-24",
+      "time": "21:30",
+      "home": "uta",
+      "away": "mia",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "15:00",
+      "home": "det",
+      "away": "sac",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "15:30",
+      "home": "mem",
+      "away": "den",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "19:00",
+      "home": "mil",
+      "away": "dal",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "19:00",
+      "home": "okc",
+      "away": "tor",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "19:00",
+      "home": "sas",
+      "away": "nop",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "20:00",
+      "home": "phx",
+      "away": "mia",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-25",
+      "time": "21:00",
+      "home": "lac",
+      "away": "bkn",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "19:00",
+      "home": "cha",
+      "away": "phi",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "19:00",
+      "home": "cle",
+      "away": "orl",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "19:30",
+      "home": "atl",
+      "away": "ind",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "20:00",
+      "home": "bos",
+      "away": "por",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "20:00",
+      "home": "chi",
+      "away": "lal",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "20:00",
+      "home": "hou",
+      "away": "mem",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-26",
+      "time": "21:30",
+      "home": "min",
+      "away": "gsw",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "19:00",
+      "home": "was",
+      "away": "por",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "sac",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "20:00",
+      "home": "phi",
+      "away": "mil",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "20:00",
+      "home": "okc",
+      "away": "nop",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "21:00",
+      "home": "den",
+      "away": "det",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "21:00",
+      "home": "phx",
+      "away": "bkn",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "22:00",
+      "home": "uta",
+      "away": "lac",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "19:00",
+      "home": "cle",
+      "away": "lal",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "19:00",
+      "home": "ind",
+      "away": "chi",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "19:30",
+      "home": "bos",
+      "away": "atl",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "19:30",
+      "home": "mia",
+      "away": "orl",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "19:30",
+      "home": "tor",
+      "away": "nyk",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "20:00",
+      "home": "mem",
+      "away": "cha",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "20:30",
+      "home": "dal",
+      "away": "min",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "21:00",
+      "home": "uta",
+      "away": "gsw",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-28",
+      "time": "21:30",
+      "home": "hou",
+      "away": "sas",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "19:00",
+      "home": "phi",
+      "away": "sac",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "19:00",
+      "home": "was",
+      "away": "mil",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "20:00",
+      "home": "chi",
+      "away": "mia",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "20:00",
+      "home": "atl",
+      "away": "hou",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "20:30",
+      "home": "dal",
+      "away": "cha",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "21:00",
+      "home": "den",
+      "away": "bkn",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "21:00",
+      "home": "phx",
+      "away": "det",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-29",
+      "time": "21:30",
+      "home": "min",
+      "away": "okc",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "19:00",
+      "home": "orl",
+      "away": "tor",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "19:00",
+      "home": "was",
+      "away": "lal",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "19:30",
+      "home": "bos",
+      "away": "sac",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "por",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "19:30",
+      "home": "nop",
+      "away": "mem",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "21:00",
+      "home": "phx",
+      "away": "cle",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "21:00",
+      "home": "den",
+      "away": "lac",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "21:30",
+      "home": "uta",
+      "away": "bkn",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-30",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "det",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "15:00",
+      "home": "cha",
+      "away": "sas",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "19:00",
+      "home": "ind",
+      "away": "atl",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "19:30",
+      "home": "phi",
+      "away": "nop",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "20:00",
+      "home": "mia",
+      "away": "chi",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "20:00",
+      "home": "mem",
+      "away": "min",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-01-31",
+      "time": "20:30",
+      "home": "hou",
+      "away": "dal",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "15:30",
+      "home": "bos",
+      "away": "mil",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "16:00",
+      "home": "sas",
+      "away": "orl",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "18:00",
+      "home": "det",
+      "away": "bkn",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "18:00",
+      "home": "mia",
+      "away": "chi",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "18:00",
+      "home": "tor",
+      "away": "uta",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "18:00",
+      "home": "was",
+      "away": "sac",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "19:00",
+      "home": "nyk",
+      "away": "lal",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "20:00",
+      "home": "phx",
+      "away": "lac",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "21:00",
+      "home": "por",
+      "away": "cle",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-01",
+      "time": "21:30",
+      "home": "den",
+      "away": "okc",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-02",
+      "time": "19:00",
+      "home": "cha",
+      "away": "nop",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-02",
+      "time": "19:00",
+      "home": "ind",
+      "away": "hou",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-02",
+      "time": "19:30",
+      "home": "mem",
+      "away": "min",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-02",
+      "time": "22:00",
+      "home": "lac",
+      "away": "phi",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "19:00",
+      "home": "det",
+      "away": "den",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "19:00",
+      "home": "ind",
+      "away": "uta",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "19:00",
+      "home": "was",
+      "away": "nyk",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "lal",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "19:30",
+      "home": "mia",
+      "away": "atl",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "20:00",
+      "home": "dal",
+      "away": "bos",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "20:00",
+      "home": "mil",
+      "away": "chi",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "20:00",
+      "home": "okc",
+      "away": "orl",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "phi",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-03",
+      "time": "23:00",
+      "home": "por",
+      "away": "phx",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "19:00",
+      "home": "nyk",
+      "away": "den",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "19:30",
+      "home": "tor",
+      "away": "min",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "20:00",
+      "home": "hou",
+      "away": "bos",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "20:00",
+      "home": "mil",
+      "away": "nop",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "21:30",
+      "home": "sas",
+      "away": "okc",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "22:00",
+      "home": "sac",
+      "away": "mem",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-04",
+      "time": "22:30",
+      "home": "lac",
+      "away": "cle",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "19:00",
+      "home": "det",
+      "away": "was",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "19:00",
+      "home": "orl",
+      "away": "bkn",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "19:30",
+      "home": "atl",
+      "away": "uta",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "19:30",
+      "home": "tor",
+      "away": "chi",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "20:00",
+      "home": "hou",
+      "away": "cha",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "20:30",
+      "home": "dal",
+      "away": "sas",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "22:00",
+      "home": "phx",
+      "away": "gsw",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-05",
+      "time": "22:00",
+      "home": "lal",
+      "away": "phi",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-06",
+      "time": "19:30",
+      "home": "bos",
+      "away": "mia",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-06",
+      "time": "19:30",
+      "home": "det",
+      "away": "nyk",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-06",
+      "time": "20:00",
+      "home": "mil",
+      "away": "ind",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-06",
+      "time": "20:00",
+      "home": "min",
+      "away": "nop",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-06",
+      "time": "22:00",
+      "home": "por",
+      "away": "mem",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-06",
+      "time": "22:00",
+      "home": "sac",
+      "away": "lac",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "15:00",
+      "home": "bkn",
+      "away": "was",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "15:30",
+      "home": "okc",
+      "away": "hou",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "18:00",
+      "home": "sas",
+      "away": "dal",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "19:00",
+      "home": "orl",
+      "away": "uta",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "19:30",
+      "home": "atl",
+      "away": "cha",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "20:00",
+      "home": "chi",
+      "away": "den",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "20:30",
+      "home": "lal",
+      "away": "gsw",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "21:00",
+      "home": "phx",
+      "away": "phi",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "22:00",
+      "home": "por",
+      "away": "mem",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-07",
+      "time": "22:00",
+      "home": "sac",
+      "away": "cle",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-08",
+      "time": "12:30",
+      "home": "bos",
+      "away": "nyk",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-08",
+      "time": "14:00",
+      "home": "was",
+      "away": "mia",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-08",
+      "time": "15:00",
+      "home": "tor",
+      "away": "ind",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-08",
+      "time": "15:00",
+      "home": "min",
+      "away": "lac",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "19:00",
+      "home": "cha",
+      "away": "det",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "chi",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "19:30",
+      "home": "mia",
+      "away": "uta",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "19:30",
+      "home": "orl",
+      "away": "mil",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "20:00",
+      "home": "min",
+      "away": "atl",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "20:00",
+      "home": "nop",
+      "away": "sac",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "21:00",
+      "home": "den",
+      "away": "cle",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "mem",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "22:00",
+      "home": "lal",
+      "away": "okc",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-09",
+      "time": "22:00",
+      "home": "por",
+      "away": "phi",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-10",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "ind",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-10",
+      "time": "20:00",
+      "home": "hou",
+      "away": "lac",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-10",
+      "time": "21:00",
+      "home": "phx",
+      "away": "dal",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-10",
+      "time": "22:30",
+      "home": "lal",
+      "away": "sas",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:00",
+      "home": "cha",
+      "away": "atl",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:00",
+      "home": "cle",
+      "away": "was",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:00",
+      "home": "orl",
+      "away": "mil",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:30",
+      "home": "bos",
+      "away": "chi",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "ind",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:30",
+      "home": "phi",
+      "away": "nyk",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "19:30",
+      "home": "tor",
+      "away": "det",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "20:00",
+      "home": "hou",
+      "away": "lac",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "20:00",
+      "home": "min",
+      "away": "por",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "20:00",
+      "home": "nop",
+      "away": "mia",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "21:00",
+      "home": "phx",
+      "away": "okc",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "21:00",
+      "home": "uta",
+      "away": "sac",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "22:00",
+      "home": "den",
+      "away": "mem",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-11",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "sas",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-12",
+      "time": "19:30",
+      "home": "okc",
+      "away": "mil",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-12",
+      "time": "21:00",
+      "home": "uta",
+      "away": "por",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-12",
+      "time": "22:00",
+      "home": "lal",
+      "away": "dal",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "19:00",
+      "home": "cha",
+      "away": "hou",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "19:00",
+      "home": "cle",
+      "away": "bkn",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "19:00",
+      "home": "phi",
+      "away": "atl",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "19:00",
+      "home": "was",
+      "away": "ind",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "det",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "20:00",
+      "home": "chi",
+      "away": "tor",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "20:30",
+      "home": "sas",
+      "away": "phx",
+      "location": "Austin, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "bos",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "22:00",
+      "home": "sac",
+      "away": "orl",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-19",
+      "time": "22:30",
+      "home": "lac",
+      "away": "den",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "19:00",
+      "home": "cha",
+      "away": "cle",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "19:00",
+      "home": "was",
+      "away": "ind",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "19:00",
+      "home": "mem",
+      "away": "uta",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "19:30",
+      "home": "atl",
+      "away": "mia",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "19:30",
+      "home": "min",
+      "away": "dal",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "20:00",
+      "home": "nop",
+      "away": "mil",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "20:00",
+      "home": "okc",
+      "away": "bkn",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "22:00",
+      "home": "lal",
+      "away": "lac",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-20",
+      "time": "22:00",
+      "home": "por",
+      "away": "den",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-21",
+      "time": "17:00",
+      "home": "phx",
+      "away": "orl",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-21",
+      "time": "19:00",
+      "home": "nop",
+      "away": "phi",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-21",
+      "time": "20:00",
+      "home": "mia",
+      "away": "mem",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-21",
+      "time": "20:00",
+      "home": "chi",
+      "away": "det",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-21",
+      "time": "20:00",
+      "home": "sas",
+      "away": "sac",
+      "location": "Austin, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-21",
+      "time": "20:30",
+      "home": "nyk",
+      "away": "hou",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "13:00",
+      "home": "okc",
+      "away": "cle",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "15:30",
+      "home": "atl",
+      "away": "bkn",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "15:30",
+      "home": "mil",
+      "away": "tor",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "15:30",
+      "home": "gsw",
+      "away": "den",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "17:00",
+      "home": "ind",
+      "away": "dal",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "18:00",
+      "home": "was",
+      "away": "cha",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "18:30",
+      "home": "lal",
+      "away": "bos",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "19:00",
+      "home": "min",
+      "away": "phi",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "20:00",
+      "home": "chi",
+      "away": "nyk",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "20:00",
+      "home": "phx",
+      "away": "por",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-22",
+      "time": "21:00",
+      "home": "lac",
+      "away": "orl",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-23",
+      "time": "19:00",
+      "home": "det",
+      "away": "sas",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-23",
+      "time": "20:00",
+      "home": "mem",
+      "away": "sac",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-23",
+      "time": "21:30",
+      "home": "hou",
+      "away": "uta",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "19:00",
+      "home": "ind",
+      "away": "phi",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "19:30",
+      "home": "atl",
+      "away": "was",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "dal",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "19:30",
+      "home": "tor",
+      "away": "okc",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "20:00",
+      "home": "cle",
+      "away": "nyk",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "20:00",
+      "home": "chi",
+      "away": "cha",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "20:00",
+      "home": "mil",
+      "away": "mia",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "20:00",
+      "home": "nop",
+      "away": "gsw",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "21:00",
+      "home": "phx",
+      "away": "bos",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "22:30",
+      "home": "lal",
+      "away": "orl",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-24",
+      "time": "23:00",
+      "home": "por",
+      "away": "min",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-25",
+      "time": "19:00",
+      "home": "det",
+      "away": "okc",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-25",
+      "time": "19:30",
+      "home": "tor",
+      "away": "sas",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-25",
+      "time": "19:30",
+      "home": "mem",
+      "away": "gsw",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-25",
+      "time": "20:00",
+      "home": "hou",
+      "away": "sac",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-25",
+      "time": "20:00",
+      "home": "mil",
+      "away": "cle",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-25",
+      "time": "22:00",
+      "home": "den",
+      "away": "bos",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "19:00",
+      "home": "ind",
+      "away": "cha",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "19:00",
+      "home": "phi",
+      "away": "mia",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "19:30",
+      "home": "atl",
+      "away": "was",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "sas",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "19:30",
+      "home": "orl",
+      "away": "hou",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "20:00",
+      "home": "chi",
+      "away": "por",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "20:30",
+      "home": "dal",
+      "away": "sac",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "21:00",
+      "home": "phx",
+      "away": "lal",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "21:00",
+      "home": "uta",
+      "away": "nop",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-26",
+      "time": "22:00",
+      "home": "lac",
+      "away": "min",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-27",
+      "time": "19:00",
+      "home": "det",
+      "away": "cle",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-27",
+      "time": "19:30",
+      "home": "bos",
+      "away": "bkn",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-27",
+      "time": "20:00",
+      "home": "mil",
+      "away": "nyk",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-27",
+      "time": "20:30",
+      "home": "dal",
+      "away": "mem",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-27",
+      "time": "21:30",
+      "home": "okc",
+      "away": "den",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-28",
+      "time": "13:00",
+      "home": "cha",
+      "away": "por",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-28",
+      "time": "15:00",
+      "home": "mia",
+      "away": "hou",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-28",
+      "time": "19:00",
+      "home": "was",
+      "away": "tor",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-28",
+      "time": "20:30",
+      "home": "gsw",
+      "away": "lal",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-02-28",
+      "time": "21:30",
+      "home": "uta",
+      "away": "nop",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "13:00",
+      "home": "nyk",
+      "away": "sas",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "15:30",
+      "home": "bkn",
+      "away": "cle",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "15:30",
+      "home": "chi",
+      "away": "mil",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "15:30",
+      "home": "den",
+      "away": "min",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "17:00",
+      "home": "ind",
+      "away": "mem",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "18:00",
+      "home": "atl",
+      "away": "por",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "18:00",
+      "home": "bos",
+      "away": "phi",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "18:00",
+      "home": "orl",
+      "away": "det",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "20:00",
+      "home": "dal",
+      "away": "okc",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "21:00",
+      "home": "lac",
+      "away": "nop",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-01",
+      "time": "21:30",
+      "home": "lal",
+      "away": "sac",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-02",
+      "time": "19:00",
+      "home": "was",
+      "away": "hou",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-02",
+      "time": "19:30",
+      "home": "mil",
+      "away": "bos",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-02",
+      "time": "21:00",
+      "home": "uta",
+      "away": "den",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-02",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "lac",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "19:00",
+      "home": "cha",
+      "away": "dal",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "19:00",
+      "home": "cle",
+      "away": "det",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "19:00",
+      "home": "orl",
+      "away": "was",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "19:30",
+      "home": "mia",
+      "away": "bkn",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "19:30",
+      "home": "tor",
+      "away": "nyk",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "20:00",
+      "home": "phi",
+      "away": "sas",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "20:00",
+      "home": "chi",
+      "away": "okc",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "20:00",
+      "home": "min",
+      "away": "mem",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "22:30",
+      "home": "lal",
+      "away": "nop",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-03",
+      "time": "23:00",
+      "home": "sac",
+      "away": "phx",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-04",
+      "time": "19:00",
+      "home": "nyk",
+      "away": "okc",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-04",
+      "time": "19:30",
+      "home": "bos",
+      "away": "cha",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-04",
+      "time": "19:30",
+      "home": "phi",
+      "away": "uta",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-04",
+      "time": "20:00",
+      "home": "mem",
+      "away": "por",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-04",
+      "time": "21:30",
+      "home": "mil",
+      "away": "atl",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-04",
+      "time": "22:30",
+      "home": "lac",
+      "away": "ind",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "19:00",
+      "home": "orl",
+      "away": "dal",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "19:00",
+      "home": "was",
+      "away": "uta",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "19:30",
+      "home": "mia",
+      "away": "bkn",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "19:30",
+      "home": "hou",
+      "away": "gsw",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "20:00",
+      "home": "min",
+      "away": "tor",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "20:00",
+      "home": "sas",
+      "away": "det",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "21:00",
+      "home": "phx",
+      "away": "chi",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "22:00",
+      "home": "den",
+      "away": "lal",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-05",
+      "time": "22:00",
+      "home": "sac",
+      "away": "nop",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "19:00",
+      "home": "bos",
+      "away": "dal",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "19:00",
+      "home": "cha",
+      "away": "mia",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "20:00",
+      "home": "hou",
+      "away": "por",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "21:00",
+      "home": "den",
+      "away": "nyk",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "21:00",
+      "home": "phx",
+      "away": "nop",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "21:30",
+      "home": "sas",
+      "away": "lac",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-06",
+      "time": "22:30",
+      "home": "lal",
+      "away": "ind",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-07",
+      "time": "15:00",
+      "home": "min",
+      "away": "orl",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-07",
+      "time": "18:00",
+      "home": "det",
+      "away": "bkn",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-07",
+      "time": "19:30",
+      "home": "atl",
+      "away": "phi",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-07",
+      "time": "20:00",
+      "home": "mem",
+      "away": "lac",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-07",
+      "time": "20:00",
+      "home": "mil",
+      "away": "uta",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-07",
+      "time": "20:30",
+      "home": "okc",
+      "away": "gsw",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "13:00",
+      "home": "cle",
+      "away": "bos",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "15:30",
+      "home": "lal",
+      "away": "nyk",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "18:00",
+      "home": "mia",
+      "away": "det",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "18:00",
+      "home": "tor",
+      "away": "dal",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "19:00",
+      "home": "nop",
+      "away": "was",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "20:00",
+      "home": "mil",
+      "away": "orl",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "20:00",
+      "home": "sas",
+      "away": "hou",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "21:00",
+      "home": "phx",
+      "away": "cha",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "21:00",
+      "home": "por",
+      "away": "ind",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-08",
+      "time": "21:00",
+      "home": "sac",
+      "away": "chi",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-09",
+      "time": "19:00",
+      "home": "cle",
+      "away": "phi",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-09",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "mem",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-09",
+      "time": "19:30",
+      "home": "okc",
+      "away": "den",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-09",
+      "time": "21:00",
+      "home": "uta",
+      "away": "gsw",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-09",
+      "time": "22:00",
+      "home": "lac",
+      "away": "nyk",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "19:00",
+      "home": "phi",
+      "away": "mem",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "det",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "19:30",
+      "home": "mia",
+      "away": "was",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "20:00",
+      "home": "atl",
+      "away": "dal",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "20:00",
+      "home": "hou",
+      "away": "tor",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "20:00",
+      "home": "mil",
+      "away": "phx",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "20:00",
+      "home": "sas",
+      "away": "bos",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "chi",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "22:00",
+      "home": "por",
+      "away": "cha",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "22:00",
+      "home": "sac",
+      "away": "ind",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-10",
+      "time": "23:00",
+      "home": "lal",
+      "away": "min",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-11",
+      "time": "19:30",
+      "home": "orl",
+      "away": "cle",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-11",
+      "time": "20:00",
+      "home": "nop",
+      "away": "tor",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-11",
+      "time": "21:00",
+      "home": "uta",
+      "away": "nyk",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-11",
+      "time": "22:00",
+      "home": "den",
+      "away": "hou",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-11",
+      "time": "22:00",
+      "home": "sac",
+      "away": "cha",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-11",
+      "time": "22:30",
+      "home": "lac",
+      "away": "min",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "19:00",
+      "home": "det",
+      "away": "phi",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "19:00",
+      "home": "ind",
+      "away": "phx",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "19:00",
+      "home": "orl",
+      "away": "was",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "19:30",
+      "home": "atl",
+      "away": "bkn",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "19:30",
+      "home": "mia",
+      "away": "mil",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "21:00",
+      "home": "sas",
+      "away": "den",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "21:30",
+      "home": "okc",
+      "away": "bos",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-12",
+      "time": "22:30",
+      "home": "lal",
+      "away": "chi",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "19:30",
+      "home": "det",
+      "away": "mem",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "19:30",
+      "home": "ind",
+      "away": "nyk",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "19:30",
+      "home": "tor",
+      "away": "phx",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "19:30",
+      "home": "dal",
+      "away": "cle",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "20:00",
+      "home": "hou",
+      "away": "nop",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "min",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "22:00",
+      "home": "por",
+      "away": "uta",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-13",
+      "time": "22:30",
+      "home": "lac",
+      "away": "chi",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "13:00",
+      "home": "phi",
+      "away": "bkn",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "15:00",
+      "home": "atl",
+      "away": "mil",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "18:00",
+      "home": "bos",
+      "away": "was",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "20:00",
+      "home": "mia",
+      "away": "orl",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "20:00",
+      "home": "sas",
+      "away": "cha",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "20:30",
+      "home": "lal",
+      "away": "den",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-14",
+      "time": "22:30",
+      "home": "lac",
+      "away": "sac",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "13:00",
+      "home": "okc",
+      "away": "min",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "15:30",
+      "home": "cle",
+      "away": "dal",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "15:30",
+      "home": "tor",
+      "away": "det",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "15:30",
+      "home": "mil",
+      "away": "ind",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "18:00",
+      "home": "phi",
+      "away": "por",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "20:00",
+      "home": "nyk",
+      "away": "gsw",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-15",
+      "time": "22:00",
+      "home": "sac",
+      "away": "uta",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "19:00",
+      "home": "atl",
+      "away": "orl",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "19:00",
+      "home": "was",
+      "away": "gsw",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "por",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "20:00",
+      "home": "bos",
+      "away": "phx",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "20:00",
+      "home": "chi",
+      "away": "mem",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "20:00",
+      "home": "nop",
+      "away": "dal",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "21:00",
+      "home": "hou",
+      "away": "lal",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-16",
+      "time": "22:30",
+      "home": "lac",
+      "away": "sas",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "19:00",
+      "home": "cha",
+      "away": "mia",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "19:00",
+      "home": "orl",
+      "away": "okc",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "19:00",
+      "home": "was",
+      "away": "det",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "ind",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "20:00",
+      "home": "mil",
+      "away": "cle",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "20:00",
+      "home": "min",
+      "away": "phx",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "21:00",
+      "home": "den",
+      "away": "phi",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-17",
+      "time": "23:00",
+      "home": "sac",
+      "away": "sas",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "19:00",
+      "home": "bos",
+      "away": "gsw",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "okc",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "19:30",
+      "home": "ind",
+      "away": "por",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "20:00",
+      "home": "chi",
+      "away": "tor",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "20:00",
+      "home": "mem",
+      "away": "nyk",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "20:00",
+      "home": "min",
+      "away": "uta",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "20:00",
+      "home": "nop",
+      "away": "lac",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "20:30",
+      "home": "dal",
+      "away": "atl",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-18",
+      "time": "21:30",
+      "home": "hou",
+      "away": "lal",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "19:00",
+      "home": "cha",
+      "away": "orl",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "19:00",
+      "home": "was",
+      "away": "det",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "20:00",
+      "home": "mia",
+      "away": "lal",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "20:00",
+      "home": "chi",
+      "away": "cle",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "20:00",
+      "home": "nop",
+      "away": "lac",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "20:00",
+      "home": "sas",
+      "away": "phx",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "21:00",
+      "home": "uta",
+      "away": "mil",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-19",
+      "time": "22:00",
+      "home": "sac",
+      "away": "phi",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-20",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "nyk",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-20",
+      "time": "19:30",
+      "home": "det",
+      "away": "gsw",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-20",
+      "time": "20:00",
+      "home": "hou",
+      "away": "atl",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-20",
+      "time": "20:00",
+      "home": "mem",
+      "away": "bos",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-20",
+      "time": "20:00",
+      "home": "min",
+      "away": "por",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-20",
+      "time": "21:00",
+      "home": "den",
+      "away": "tor",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "17:00",
+      "home": "was",
+      "away": "okc",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "19:00",
+      "home": "cha",
+      "away": "mem",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "19:00",
+      "home": "orl",
+      "away": "lal",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "19:00",
+      "home": "nop",
+      "away": "cle",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "20:00",
+      "home": "atl",
+      "away": "gsw",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "20:00",
+      "home": "hou",
+      "away": "mia",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "20:00",
+      "home": "sas",
+      "away": "ind",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "20:30",
+      "home": "dal",
+      "away": "lac",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "21:30",
+      "home": "uta",
+      "away": "phi",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-21",
+      "time": "22:00",
+      "home": "phx",
+      "away": "mil",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-22",
+      "time": "17:00",
+      "home": "den",
+      "away": "por",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-22",
+      "time": "18:00",
+      "home": "sac",
+      "away": "bkn",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-22",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "was",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-22",
+      "time": "20:00",
+      "home": "bos",
+      "away": "min",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-22",
+      "time": "21:00",
+      "home": "phx",
+      "away": "tor",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "19:00",
+      "home": "atl",
+      "away": "mem",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "19:00",
+      "home": "det",
+      "away": "lal",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "19:00",
+      "home": "orl",
+      "away": "ind",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "19:00",
+      "home": "phi",
+      "away": "okc",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "19:30",
+      "home": "mia",
+      "away": "sas",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "20:00",
+      "home": "chi",
+      "away": "hou",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "21:00",
+      "home": "uta",
+      "away": "tor",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "21:30",
+      "home": "dal",
+      "away": "gsw",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "22:00",
+      "home": "por",
+      "away": "bkn",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-23",
+      "time": "22:30",
+      "home": "lac",
+      "away": "mil",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "19:00",
+      "home": "cha",
+      "away": "sac",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "nop",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "20:00",
+      "home": "cle",
+      "away": "orl",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "23:00",
+      "home": "phx",
+      "away": "den",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:00",
+      "home": "det",
+      "away": "atl",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:00",
+      "home": "ind",
+      "away": "lal",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:00",
+      "home": "phi",
+      "away": "chi",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:30",
+      "home": "bos",
+      "away": "okc",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:30",
+      "home": "cle",
+      "away": "mia",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "20:00",
+      "home": "mem",
+      "away": "sas",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "21:00",
+      "home": "uta",
+      "away": "was",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "21:30",
+      "home": "min",
+      "away": "hou",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "22:00",
+      "home": "den",
+      "away": "dal",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "bkn",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "22:00",
+      "home": "por",
+      "away": "mil",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "22:30",
+      "home": "lac",
+      "away": "tor",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "19:00",
+      "home": "cha",
+      "away": "nyk",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "19:00",
+      "home": "det",
+      "away": "nop",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "19:00",
+      "home": "orl",
+      "away": "sac",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "19:00",
+      "home": "ind",
+      "away": "lac",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "19:30",
+      "home": "bos",
+      "away": "atl",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "19:30",
+      "home": "cle",
+      "away": "mia",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "20:00",
+      "home": "mem",
+      "away": "hou",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "20:00",
+      "home": "okc",
+      "away": "chi",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "20:30",
+      "home": "tor",
+      "away": "nop",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "21:00",
+      "home": "den",
+      "away": "uta",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "was",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "22:00",
+      "home": "por",
+      "away": "dal",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "22:30",
+      "home": "lal",
+      "away": "bkn",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "15:00",
+      "home": "mil",
+      "away": "sas",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "18:00",
+      "home": "cha",
+      "away": "phi",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "19:30",
+      "home": "atl",
+      "away": "sac",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "20:00",
+      "home": "mem",
+      "away": "chi",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "20:00",
+      "home": "min",
+      "away": "det",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-28",
+      "time": "22:00",
+      "home": "phx",
+      "away": "uta",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "15:30",
+      "home": "mil",
+      "away": "lac",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "17:00",
+      "home": "ind",
+      "away": "mia",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "18:00",
+      "home": "bkn",
+      "away": "sac",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "18:00",
+      "home": "cha",
+      "away": "bos",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "18:00",
+      "home": "tor",
+      "away": "orl",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "18:00",
+      "home": "por",
+      "away": "was",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "19:00",
+      "home": "nop",
+      "away": "hou",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "19:30",
+      "home": "okc",
+      "away": "nyk",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-29",
+      "time": "22:00",
+      "home": "den",
+      "away": "gsw",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "19:00",
+      "home": "mia",
+      "away": "phi",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "19:30",
+      "home": "atl",
+      "away": "bos",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "20:00",
+      "home": "mem",
+      "away": "phx",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "20:00",
+      "home": "sas",
+      "away": "chi",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "20:30",
+      "home": "dal",
+      "away": "min",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "21:00",
+      "home": "uta",
+      "away": "cle",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "21:30",
+      "home": "okc",
+      "away": "det",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-30",
+      "time": "22:00",
+      "home": "lal",
+      "away": "was",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-31",
+      "time": "19:00",
+      "home": "orl",
+      "away": "phx",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-31",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "cha",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-31",
+      "time": "20:00",
+      "home": "det",
+      "away": "tor",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-31",
+      "time": "20:00",
+      "home": "hou",
+      "away": "nyk",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-31",
+      "time": "22:30",
+      "home": "lal",
+      "away": "cle",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-03-31",
+      "time": "23:00",
+      "home": "lac",
+      "away": "por",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "19:00",
+      "home": "was",
+      "away": "phi",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "19:30",
+      "home": "mia",
+      "away": "bos",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "19:30",
+      "home": "orl",
+      "away": "atl",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "20:00",
+      "home": "tor",
+      "away": "sac",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "20:00",
+      "home": "chi",
+      "away": "ind",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "20:00",
+      "home": "hou",
+      "away": "mil",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "20:00",
+      "home": "mem",
+      "away": "dal",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "21:00",
+      "home": "uta",
+      "away": "den",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-01",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "sas",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-02",
+      "time": "19:00",
+      "home": "cha",
+      "away": "phx",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-02",
+      "time": "19:00",
+      "home": "det",
+      "away": "min",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-02",
+      "time": "21:30",
+      "home": "okc",
+      "away": "lal",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-02",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "cle",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-02",
+      "time": "22:00",
+      "home": "por",
+      "away": "nop",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-02",
+      "time": "22:30",
+      "home": "lac",
+      "away": "sas",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "19:00",
+      "home": "cha",
+      "away": "ind",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "19:00",
+      "home": "phi",
+      "away": "min",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "atl",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "chi",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "20:00",
+      "home": "hou",
+      "away": "uta",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "20:00",
+      "home": "mem",
+      "away": "tor",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "20:00",
+      "home": "mil",
+      "away": "bos",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "20:30",
+      "home": "dal",
+      "away": "orl",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-03",
+      "time": "22:00",
+      "home": "sac",
+      "away": "nop",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-04",
+      "time": "15:00",
+      "home": "mia",
+      "away": "was",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-04",
+      "time": "15:00",
+      "home": "den",
+      "away": "sas",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-04",
+      "time": "19:00",
+      "home": "phi",
+      "away": "det",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "15:30",
+      "home": "bos",
+      "away": "tor",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "15:30",
+      "home": "bkn",
+      "away": "was",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "15:30",
+      "home": "chi",
+      "away": "phx",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "15:30",
+      "home": "mil",
+      "away": "mem",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "18:00",
+      "home": "cle",
+      "away": "ind",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "19:00",
+      "home": "min",
+      "away": "cha",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "19:00",
+      "home": "nop",
+      "away": "orl",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "19:00",
+      "home": "okc",
+      "away": "uta",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "19:30",
+      "home": "dal",
+      "away": "lal",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "21:00",
+      "home": "sac",
+      "away": "lac",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-05",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "hou",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-06",
+      "time": "19:00",
+      "home": "atl",
+      "away": "nyk",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-06",
+      "time": "19:00",
+      "home": "orl",
+      "away": "det",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-06",
+      "time": "20:00",
+      "home": "mem",
+      "away": "cle",
+      "location": "Memphis, TN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-06",
+      "time": "20:00",
+      "home": "sas",
+      "away": "phi",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-06",
+      "time": "21:00",
+      "home": "den",
+      "away": "por",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "19:00",
+      "home": "was",
+      "away": "chi",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "19:30",
+      "home": "bos",
+      "away": "cha",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "mil",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "19:30",
+      "home": "tor",
+      "away": "mia",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "20:00",
+      "home": "ind",
+      "away": "min",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "20:00",
+      "home": "nop",
+      "away": "uta",
+      "location": "New Orleans, LA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "sac",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "22:30",
+      "home": "lal",
+      "away": "okc",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "22:30",
+      "home": "lac",
+      "away": "dal",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-07",
+      "time": "23:00",
+      "home": "phx",
+      "away": "hou",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "19:00",
+      "home": "cle",
+      "away": "atl",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "19:00",
+      "home": "orl",
+      "away": "min",
+      "location": "Orlando, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "19:30",
+      "home": "det",
+      "away": "mil",
+      "location": "Detroit, MI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "20:00",
+      "home": "sas",
+      "away": "por",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "21:00",
+      "home": "den",
+      "away": "mem",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "22:00",
+      "home": "lac",
+      "away": "okc",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-08",
+      "time": "22:00",
+      "home": "phx",
+      "away": "dal",
+      "location": "Phoenix, AZ",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-09",
+      "time": "19:00",
+      "home": "tor",
+      "away": "mia",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-09",
+      "time": "19:00",
+      "home": "was",
+      "away": "chi",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-09",
+      "time": "19:30",
+      "home": "bkn",
+      "away": "ind",
+      "location": "Brooklyn, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-09",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "bos",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-09",
+      "time": "20:00",
+      "home": "hou",
+      "away": "phi",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-09",
+      "time": "22:00",
+      "home": "gsw",
+      "away": "lal",
+      "location": "San Francisco, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "19:00",
+      "home": "cha",
+      "away": "det",
+      "location": "Charlotte, NC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "19:00",
+      "home": "was",
+      "away": "mia",
+      "location": "Washington, DC",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "19:00",
+      "home": "atl",
+      "away": "cle",
+      "location": "Atlanta, GA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "19:30",
+      "home": "bos",
+      "away": "nop",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "19:30",
+      "home": "ind",
+      "away": "phi",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "19:30",
+      "home": "nyk",
+      "away": "tor",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "20:00",
+      "home": "chi",
+      "away": "orl",
+      "location": "Chicago, IL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "20:00",
+      "home": "mil",
+      "away": "bkn",
+      "location": "Milwaukee, WI",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "20:00",
+      "home": "sas",
+      "away": "dal",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "21:00",
+      "home": "den",
+      "away": "okc",
+      "location": "Denver, CO",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "21:30",
+      "home": "hou",
+      "away": "min",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "21:30",
+      "home": "uta",
+      "away": "mem",
+      "location": "Salt Lake City, UT",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "22:00",
+      "home": "por",
+      "away": "lac",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "22:00",
+      "home": "sac",
+      "away": "gsw",
+      "location": "Sacramento, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-10",
+      "time": "22:30",
+      "home": "lal",
+      "away": "phx",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "bos",
+      "away": "orl",
+      "location": "Boston, MA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "cle",
+      "away": "was",
+      "location": "Cleveland, OH",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "ind",
+      "away": "det",
+      "location": "Indianapolis, IN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "mia",
+      "away": "atl",
+      "location": "Miami, FL",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "nyk",
+      "away": "cha",
+      "location": "New York, NY",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "phi",
+      "away": "mil",
+      "location": "Philadelphia, PA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "18:00",
+      "home": "tor",
+      "away": "bkn",
+      "location": "Toronto, ON",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "dal",
+      "away": "chi",
+      "location": "Dallas, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "hou",
+      "away": "mem",
+      "location": "Houston, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "min",
+      "away": "nop",
+      "location": "Minneapolis, MN",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "okc",
+      "away": "phx",
+      "location": "Oklahoma City, OK",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "sas",
+      "away": "den",
+      "location": "San Antonio, TX",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "lal",
+      "away": "uta",
+      "location": "Los Angeles, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "lac",
+      "away": "gsw",
+      "location": "Inglewood, CA",
+      "label": "Regular Season"
+    },
+    {
+      "date": "2026-04-12",
+      "time": "20:30",
+      "home": "por",
+      "away": "sac",
+      "location": "Portland, OR",
+      "label": "Regular Season"
+    }
+  ]
+}

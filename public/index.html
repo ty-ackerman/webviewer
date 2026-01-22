@@ -132,6 +132,71 @@
         border: 0;
       }
 
+      /* Ad blocking overlays - blocks clicks on common ad positions */
+      .adBlockOverlay {
+        position: absolute;
+        background: transparent;
+        z-index: 10;
+        pointer-events: auto;
+      }
+
+      /* Top banner ad blocker */
+      .adBlockTop {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+      }
+
+      /* Bottom banner ad blocker */
+      .adBlockBottom {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+      }
+
+      /* Corner ad blockers */
+      .adBlockTopLeft {
+        top: 0;
+        left: 0;
+        width: 120px;
+        height: 120px;
+      }
+
+      .adBlockTopRight {
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 120px;
+      }
+
+      .adBlockBottomLeft {
+        bottom: 0;
+        left: 0;
+        width: 120px;
+        height: 120px;
+      }
+
+      .adBlockBottomRight {
+        bottom: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+      }
+
+      /* Center click-through zone - allows video controls */
+      .adBlockCenter {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        height: 60%;
+        pointer-events: none;
+        z-index: 11;
+      }
+
       #overlayTitle {
         position: absolute;
         left: 1rem;
@@ -348,6 +413,85 @@
         padding: 0.9rem;
         text-align: center;
       }
+
+      /* Today's NBA Games Grid */
+      .gamesGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .gameCard {
+        background: #0b0b0b;
+        border: 1px solid #1f1f1f;
+        border-radius: 8px;
+        padding: 0.7rem;
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+        text-align: center;
+      }
+
+      .gameCard:hover {
+        background: #151515;
+        border-color: #333;
+      }
+
+      .gameCard:active {
+        transform: scale(0.97);
+      }
+
+      .gameCard.playing {
+        border-color: #4ade80;
+        background: #0a1a0f;
+      }
+
+      /* Game started over 3 hours ago - likely finished or ending */
+      .gameCard.gameLate {
+        border-color: #ef4444;
+        background: #1a0a0a;
+      }
+
+      /* Game started within last 3 hours - likely in progress */
+      .gameCard.gameLive {
+        border-color: #22c55e;
+        background: #0a1a0f;
+      }
+
+      .gameTeams {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #fff;
+        line-height: 1.3;
+      }
+
+      .gameAt {
+        font-size: 0.7rem;
+        color: #777;
+        margin: 0.2rem 0;
+      }
+
+      .gamesDate {
+        font-size: 0.75rem;
+        color: #888;
+        margin-bottom: 0.5rem;
+      }
+
+      .noGames {
+        color: #666;
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 1rem;
+        border: 1px dashed #2b2b2b;
+        border-radius: 8px;
+      }
+
+      .gameTime {
+        font-size: 0.65rem;
+        color: #5b8bff;
+        margin-top: 0.3rem;
+        font-weight: 500;
+      }
     </style>
     <script>
       // Basic popup hardening with whitelist
@@ -406,7 +550,10 @@
         videos: [],
         currentVideoId: null,
         streams: [],
-        currentStreamId: null
+        currentStreamId: null,
+        todaysGames: [],
+        gamesDate: null,
+        currentNbaGame: null
       };
 
       async function requestJson(url, options) {
@@ -437,6 +584,109 @@
         } catch (err) {
           console.warn("Unable to read view preference", err);
         }
+      }
+
+      /**
+       * Get game status based on start time
+       * @param {string} gameDate - Date in YYYY-MM-DD format
+       * @param {string} gameTime - Time in 24h format (e.g., "19:30")
+       * @returns {string} 'late' (>3hrs ago), 'live' (<3hrs ago), or 'upcoming'
+       */
+      function getGameStatus(gameDate, gameTime) {
+        if (!gameDate || !gameTime) return 'upcoming';
+        
+        try {
+          // Parse game start time in Eastern Time
+          const [hours, minutes] = gameTime.split(':').map(Number);
+          
+          // Create date object for game start (Eastern Time)
+          // We'll compare using current Eastern time
+          const now = new Date();
+          const etFormatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/New_York',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+          });
+          
+          const etParts = etFormatter.formatToParts(now);
+          const etNow = {
+            year: parseInt(etParts.find(p => p.type === 'year').value),
+            month: parseInt(etParts.find(p => p.type === 'month').value),
+            day: parseInt(etParts.find(p => p.type === 'day').value),
+            hour: parseInt(etParts.find(p => p.type === 'hour').value),
+            minute: parseInt(etParts.find(p => p.type === 'minute').value)
+          };
+          
+          // Parse game date
+          const [gameYear, gameMonth, gameDay] = gameDate.split('-').map(Number);
+          
+          // Calculate minutes since midnight for comparison
+          const nowMinutes = etNow.hour * 60 + etNow.minute;
+          const gameMinutes = hours * 60 + minutes;
+          
+          // Check if game is on the same day
+          const sameDay = etNow.year === gameYear && 
+                          etNow.month === gameMonth && 
+                          etNow.day === gameDay;
+          
+          if (!sameDay) {
+            // Game is on a different day
+            const gameDateTime = new Date(gameYear, gameMonth - 1, gameDay, hours, minutes);
+            const nowDateTime = new Date(etNow.year, etNow.month - 1, etNow.day, etNow.hour, etNow.minute);
+            
+            if (gameDateTime > nowDateTime) {
+              return 'upcoming';
+            }
+            // Game was on a previous day
+            const hoursSinceStart = (nowDateTime - gameDateTime) / (1000 * 60 * 60);
+            return hoursSinceStart > 3 ? 'late' : 'live';
+          }
+          
+          // Same day - compare times
+          const minutesSinceStart = nowMinutes - gameMinutes;
+          
+          if (minutesSinceStart < 0) {
+            return 'upcoming';  // Game hasn't started yet
+          } else if (minutesSinceStart > 180) {
+            return 'late';      // Started more than 3 hours ago
+          } else {
+            return 'live';      // Started within last 3 hours
+          }
+        } catch (err) {
+          console.error('Error calculating game status:', err);
+          return 'upcoming';
+        }
+      }
+
+      function addAdBlockOverlays(container) {
+        // Remove existing overlays first
+        container.querySelectorAll('.adBlockOverlay').forEach(el => el.remove());
+
+        // Create overlay elements that block clicks on common ad positions
+        const positions = [
+          'adBlockTop',
+          'adBlockBottom',
+          'adBlockTopLeft',
+          'adBlockTopRight',
+          'adBlockBottomLeft',
+          'adBlockBottomRight'
+        ];
+
+        positions.forEach(pos => {
+          const overlay = document.createElement('div');
+          overlay.className = `adBlockOverlay ${pos}`;
+          // Block clicks and prevent them from reaching ads
+          overlay.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Ad click blocked');
+          });
+          container.appendChild(overlay);
+        });
       }
 
       function configureStreamIframe(iframe, { sandboxed = true } = {}) {
@@ -533,8 +783,8 @@
 
         if (!stream) {
           streamContainer.innerHTML = "";
-          titleEl.textContent = "No stream selected yet.";
-          nowPlayingEl.textContent = "Add an embed code to start playing.";
+          titleEl.textContent = "Select a game to watch";
+          nowPlayingEl.textContent = "Click a game above to start.";
           activeStreamState = null;
           return;
         }
@@ -571,6 +821,9 @@
             configureStreamIframe(node, { sandboxed })
           );
         }
+
+        // Add ad-blocking overlays
+        addAdBlockOverlays(streamContainer);
 
         titleEl.textContent = stream.title;
         nowPlayingEl.textContent = stream.title;
@@ -644,7 +897,7 @@
         if (!streams.length) {
           const empty = document.createElement("div");
           empty.className = "emptyState";
-          empty.textContent = "No streams saved yet. Paste an embed snippet above.";
+          empty.textContent = "No streams saved yet. Click a game above to start watching.";
           listEl.appendChild(empty);
           return;
         }
@@ -780,7 +1033,7 @@
           if (!silent) {
             const message = current
               ? `Now streaming: ${current.title}`
-              : "Add your first embed to begin.";
+              : "Click a game to start watching.";
             setStatus("streams", message);
           }
 
@@ -852,87 +1105,6 @@
         }
       }
 
-      async function addStream() {
-        const titleInput = document.getElementById("newStreamTitle");
-        const embedInput = document.getElementById("newStreamEmbed");
-        const sandboxCheckbox = document.getElementById("streamSandboxToggle");
-        const title = titleInput.value.trim();
-        const embedCode = embedInput.value.trim();
-        const sandboxed = sandboxCheckbox.checked;
-
-        if (!embedCode) {
-          setStatus("streams", "Please paste an embed snippet.", false);
-          return;
-        }
-
-        setStatus("streams", "Adding stream…");
-
-        try {
-          await requestJson("/api/streams", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, embedCode, sandboxed })
-          });
-
-          titleInput.value = "";
-          embedInput.value = "";
-          const sourceUrlInput = document.getElementById("streamSourceUrl");
-          if (sourceUrlInput) {
-            sourceUrlInput.value = "";
-          }
-          sandboxCheckbox.checked = true;
-          await refreshStreams({ silent: true });
-          setStatus("streams", "Stream added and ready.");
-          if (activeView === "streams") {
-            updatePlayerForActiveView();
-          }
-        } catch (err) {
-          console.error(err);
-          setStatus("streams", err.message || "Failed to add stream.", false);
-        }
-      }
-
-      function populateStreamForm({ embedCode, title }) {
-        if (typeof embedCode === "string") {
-          document.getElementById("newStreamEmbed").value = embedCode;
-        }
-        if (typeof title === "string" && title.trim()) {
-          document.getElementById("newStreamTitle").value = title.trim();
-        }
-      }
-
-      async function extractStreamEmbed() {
-        const urlInput = document.getElementById("streamSourceUrl");
-        const rawUrl = urlInput.value.trim();
-
-        if (!rawUrl) {
-          setStatus("streams", "Paste a stream page URL first.", false);
-          return;
-        }
-
-        setStatus("streams", "Fetching embed code…");
-
-        try {
-          const data = await requestJson("/api/streams/extract", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url: rawUrl })
-          });
-
-          const embedCode = data.embedCode ? data.embedCode.trim() : "";
-          populateStreamForm({ embedCode, title: data.title });
-
-          if (embedCode) {
-            setStatus("streams", "Embed code fetched. Review then save.");
-          } else {
-            setStatus("streams", "No embed code detected in that page.", false);
-          }
-        } catch (err) {
-          console.error(err);
-          setStatus("streams", err.message || "Failed to fetch embed code.", false);
-        }
-      }
-
       async function selectStream(id) {
         setStatus("streams", "Switching stream…");
         try {
@@ -996,6 +1168,131 @@
         }
       }
 
+      // NBA Today's Games Functions
+      async function fetchTodaysGames({ silent = false } = {}) {
+        try {
+          const data = await requestJson("/api/nba-today");
+          cache.todaysGames = Array.isArray(data.games) ? data.games : [];
+          cache.gamesDate = data.date || null;
+          renderTodaysGames();
+          
+          if (!silent && cache.todaysGames.length > 0) {
+            setStatus("streams", `${cache.todaysGames.length} NBA games today. Click to watch.`);
+          } else if (!silent && cache.todaysGames.length === 0) {
+            setStatus("streams", "No NBA games scheduled for today.");
+          }
+          
+          return data;
+        } catch (err) {
+          console.error("Failed to fetch today's games:", err);
+          if (!silent) {
+            setStatus("streams", "Could not load today's games.", false);
+          }
+          renderTodaysGames(); // Render empty state
+          throw err;
+        }
+      }
+
+      function renderTodaysGames() {
+        const container = document.getElementById("todaysGames");
+        if (!container) return;
+        
+        container.innerHTML = "";
+        
+        // Show date header
+        if (cache.gamesDate) {
+          const dateEl = document.createElement("div");
+          dateEl.className = "gamesDate";
+          const dateObj = new Date(cache.gamesDate + "T12:00:00");
+          dateEl.textContent = dateObj.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "short",
+            day: "numeric"
+          });
+          container.appendChild(dateEl);
+        }
+        
+        if (!cache.todaysGames.length) {
+          const empty = document.createElement("div");
+          empty.className = "noGames";
+          empty.textContent = "No games scheduled for today.";
+          container.appendChild(empty);
+          return;
+        }
+        
+        const grid = document.createElement("div");
+        grid.className = "gamesGrid";
+        
+        cache.todaysGames.forEach(game => {
+          const card = document.createElement("div");
+          card.className = "gameCard";
+          
+          // Check if this game is currently playing in our player
+          const gameId = `nba-${game.date}-${game.away}-${game.home}`;
+          if (cache.currentNbaGame === gameId) {
+            card.classList.add("playing");
+          }
+          
+          // Calculate game status based on start time
+          const gameStatus = getGameStatus(game.date, game.time);
+          if (gameStatus === 'late') {
+            card.classList.add("gameLate");
+          } else if (gameStatus === 'live') {
+            card.classList.add("gameLive");
+          }
+          
+          const away = document.createElement("div");
+          away.className = "gameTeams";
+          away.textContent = game.awayName;
+          
+          const at = document.createElement("div");
+          at.className = "gameAt";
+          at.textContent = "@";
+          
+          const home = document.createElement("div");
+          home.className = "gameTeams";
+          home.textContent = game.homeName;
+          
+          card.appendChild(away);
+          card.appendChild(at);
+          card.appendChild(home);
+          
+          // Show start time if available
+          if (game.startTime) {
+            const time = document.createElement("div");
+            time.className = "gameTime";
+            time.textContent = game.startTime;
+            card.appendChild(time);
+          }
+          
+          card.onclick = () => playNbaGame(game);
+          
+          grid.appendChild(card);
+        });
+        
+        container.appendChild(grid);
+      }
+
+      function playNbaGame(game) {
+        // Directly play the game without saving to database
+        // Construct a stream object on the fly
+        const stream = {
+          id: `nba-${game.date}-${game.away}-${game.home}`,
+          title: game.title,
+          embedSrc: game.embedSrc,
+          embedCode: game.embedCode,
+          sandboxed: false  // modistreams needs full permissions to work
+        };
+        
+        // Track currently playing game for UI highlighting
+        cache.currentNbaGame = stream.id;
+        
+        // Play directly
+        setStreamPlayer(stream);
+        setStatus("streams", `Now playing: ${game.title}`);
+        renderTodaysGames(); // Update playing state
+      }
+
       function setupVideoControls() {
         const urlInput = document.getElementById("newUrl");
         urlInput.addEventListener("keydown", evt => {
@@ -1009,27 +1306,8 @@
       }
 
       function setupStreamControls() {
-        const embedInput = document.getElementById("newStreamEmbed");
-        embedInput.addEventListener("keydown", evt => {
-          if ((evt.metaKey || evt.ctrlKey) && evt.key === "Enter") {
-            evt.preventDefault();
-            addStream();
-          }
-        });
-
-        document.getElementById("addStreamBtn").addEventListener("click", addStream);
-        document.getElementById("extractStreamBtn").addEventListener("click", extractStreamEmbed);
-        document.getElementById("openPpvBtn").addEventListener("click", () => {
-          window.open("https://ppv.to/", "_blank", "noopener");
-        });
-
-        const sourceUrlInput = document.getElementById("streamSourceUrl");
-        sourceUrlInput.addEventListener("keydown", evt => {
-          if (evt.key === "Enter") {
-            evt.preventDefault();
-            extractStreamEmbed();
-          }
-        });
+        // Fetch today's NBA games on setup
+        fetchTodaysGames({ silent: false }).catch(() => {});
       }
 
       function setupCommonControls() {
@@ -1121,7 +1399,7 @@
         setupCommonControls();
         syncViewVisibility();
 
-        setStatus("streams", "Paste an embed snippet to get started.");
+        setStatus("streams", "Loading today's games…");
 
         refreshVideos({ silent: false })
           .catch(() => {})
@@ -1176,34 +1454,8 @@
         <div id="streamControls" class="hidden">
           <div id="statusStreams" class="statusLine"></div>
 
-          <div class="panelTitle">Add a stream embed</div>
-          <input
-            id="newStreamTitle"
-            type="text"
-            placeholder="Stream name (optional)"
-            autocomplete="off"
-          />
-          <textarea
-            id="newStreamEmbed"
-            placeholder="&lt;iframe ...&gt;&lt;/iframe&gt;"
-            autocomplete="off"
-          ></textarea>
-          <div class="helperText">Paste the embed snippet directly or fetch it from a stream page.</div>
-          <input
-            id="streamSourceUrl"
-            type="text"
-            placeholder="https://example.com/live/some-channel"
-            autocomplete="off"
-          />
-          <div class="buttonRow">
-            <button id="extractStreamBtn" class="secondary">Fetch embed from page</button>
-            <button id="openPpvBtn" class="secondary">Open PPV.to</button>
-          </div>
-          <label class="toggleRow" for="streamSandboxToggle">
-            <input type="checkbox" id="streamSandboxToggle" checked />
-            <span>Block popups for this stream (recommended)</span>
-          </label>
-          <button id="addStreamBtn">Add Stream</button>
+          <div class="panelTitle">Today's NBA Games</div>
+          <div id="todaysGames"></div>
 
           <div class="panelTitle" style="margin-top:1.4rem;">Saved Streams</div>
           <div id="streamList"></div>
