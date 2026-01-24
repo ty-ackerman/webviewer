@@ -492,52 +492,182 @@
         margin-top: 0.3rem;
         font-weight: 500;
       }
+
+      /* Click absorber overlay - intercepts initial ad-triggering clicks */
+      .clickAbsorber {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 0.3s ease;
+      }
+
+      .clickAbsorber.fading {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .clickAbsorberIcon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(91, 139, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 20px rgba(91, 139, 255, 0.4);
+      }
+
+      .clickAbsorberIcon svg {
+        width: 40px;
+        height: 40px;
+        fill: white;
+        margin-left: 4px;
+      }
+
+      .clickAbsorberText {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+
+      .clickAbsorberHint {
+        font-size: 0.75rem;
+        color: #aaa;
+        margin-top: 0.5rem;
+      }
+
+      .clickAbsorberCount {
+        font-size: 0.8rem;
+        color: #9ef59e;
+        margin-top: 0.75rem;
+        padding: 0.3rem 0.8rem;
+        background: rgba(0,0,0,0.5);
+        border-radius: 20px;
+      }
     </style>
     <script>
-      // Basic popup hardening with whitelist
+      // ============================================================
+      // AGGRESSIVE AD/POPUP BLOCKING SYSTEM
+      // ============================================================
       (function () {
-        const originalOpen = window.open;
-        const SAFE_HOSTS = new Set(["ppv.to", "www.ppv.to"]);
+        // Blocked ad domain patterns (partial matches)
+        const BLOCKED_DOMAINS = [
+          'tonybet', 'hoofoot', 'livetv', 'bet365', 'betway', '1xbet',
+          'doubleclick', 'googlesyndication', 'adservice', 'adsense',
+          'popads', 'popcash', 'propellerads', 'exoclick', 'trafficjunky',
+          'juicyads', 'adsterra', 'clickadu', 'hilltopads', 'adcash',
+          'mgid', 'taboola', 'outbrain', 'revcontent', 'content.ad',
+          'zergnet', 'adf.ly', 'shorte.st', 'bc.vc', 'ouo.io'
+        ];
 
-        window.open = function (url, ...rest) {
+        // Check if URL matches blocked pattern
+        function isBlockedUrl(url) {
+          if (!url) return true;
           try {
             const parsed = new URL(typeof url === "string" ? url : "", window.location.href);
-            if (SAFE_HOSTS.has(parsed.hostname.toLowerCase())) {
-              return originalOpen.call(window, parsed.toString(), ...rest);
+            const hostname = parsed.hostname.toLowerCase();
+            // Block if matches any blocked domain pattern
+            return BLOCKED_DOMAINS.some(pattern => hostname.includes(pattern));
+          } catch {
+            return true; // Block invalid URLs
+          }
+        }
+
+        // Create a fake window object to return instead of null
+        // Some ad scripts check if window.open returns null
+        function createFakeWindow() {
+          return {
+            closed: false,
+            close: function() { this.closed = true; },
+            focus: function() {},
+            blur: function() {},
+            postMessage: function() {},
+            location: { href: '', replace: function() {}, assign: function() {} },
+            document: { write: function() {}, close: function() {} }
+          };
+        }
+
+        // Override window.open to block ALL popups
+        const originalOpen = window.open;
+        window.open = function (url, name, features) {
+          // Allow same-origin navigations that aren't popups
+          try {
+            const parsed = new URL(typeof url === "string" ? url : "", window.location.href);
+            if (parsed.origin === window.location.origin && !features) {
+              return originalOpen.call(window, url, name, features);
             }
           } catch {
-            // fall through to block
+            // Block on parse error
           }
-          console.warn("Popup blocked:", url);
-          return null;
+          console.warn("[AdBlock] Popup blocked:", url);
+          return createFakeWindow();
         };
 
-        document.addEventListener(
-          "click",
-          function (e) {
-            const t = e.target.closest("a");
-            if (!t) return;
+        // Block programmatic link clicks
+        document.addEventListener("click", function (e) {
+          const link = e.target.closest("a");
+          if (!link) return;
 
-            const target = (t.target || "").toLowerCase();
-            const rel = (t.rel || "").toLowerCase();
-            if (target !== "_blank" && !rel.includes("popup")) {
-              return;
+          const target = (link.target || "").toLowerCase();
+          const rel = (link.rel || "").toLowerCase();
+          const href = link.href || "";
+
+          // Block _blank links and popup-style links
+          if (target === "_blank" || rel.includes("popup") || rel.includes("noopener")) {
+            if (isBlockedUrl(href) || !href.startsWith(window.location.origin)) {
+              e.preventDefault();
+              e.stopPropagation();
+              console.warn("[AdBlock] Link click blocked:", href);
+              return false;
             }
+          }
+        }, true);
 
-            try {
-              const parsed = new URL(t.href, window.location.href);
-              if (SAFE_HOSTS.has(parsed.hostname.toLowerCase())) {
-                return; // allow safe host popups
-              }
-            } catch {
-              // fall through
-            }
-
+        // Block form submissions to external domains
+        document.addEventListener("submit", function(e) {
+          const form = e.target;
+          if (form.target === "_blank" || isBlockedUrl(form.action)) {
             e.preventDefault();
-            console.warn("Blocked popup click:", t.href);
-          },
-          true
-        );
+            console.warn("[AdBlock] Form submission blocked:", form.action);
+          }
+        }, true);
+
+        // Prevent page hijacking via location changes
+        let navigationAllowed = true;
+        const originalAssign = window.location.assign;
+        const originalReplace = window.location.replace;
+        
+        window.location.assign = function(url) {
+          if (isBlockedUrl(url)) {
+            console.warn("[AdBlock] Navigation blocked:", url);
+            return;
+          }
+          return originalAssign.call(this, url);
+        };
+        
+        window.location.replace = function(url) {
+          if (isBlockedUrl(url)) {
+            console.warn("[AdBlock] Navigation blocked:", url);
+            return;
+          }
+          return originalReplace.call(this, url);
+        };
+
+        // Block beforeunload hijacking attempts
+        window.addEventListener('beforeunload', function(e) {
+          // Don't show dialog, just let the page unload normally
+          // This prevents ad scripts from trapping users
+        });
+
+        console.log("[AdBlock] Popup and ad blocking active");
       })();
 
       const VIEW_STORAGE_KEY = "channel-picker-active-view";
@@ -662,6 +792,73 @@
         }
       }
 
+      // Click absorber state - tracks clicks needed before allowing through
+      const clickAbsorberState = {
+        clicksNeeded: 2,
+        currentClicks: 0,
+        active: false
+      };
+
+      function resetClickAbsorber() {
+        clickAbsorberState.currentClicks = 0;
+        clickAbsorberState.active = false;
+      }
+
+      function createClickAbsorber(container) {
+        // Remove existing absorber
+        container.querySelectorAll('.clickAbsorber').forEach(el => el.remove());
+        
+        // Reset state for new stream
+        clickAbsorberState.currentClicks = 0;
+        clickAbsorberState.active = true;
+
+        const absorber = document.createElement('div');
+        absorber.className = 'clickAbsorber';
+        absorber.innerHTML = `
+          <div class="clickAbsorberIcon">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="clickAbsorberText">Click to Play</div>
+          <div class="clickAbsorberHint">Ad protection enabled</div>
+          <div class="clickAbsorberCount">${clickAbsorberState.clicksNeeded} clicks to start</div>
+        `;
+
+        absorber.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          clickAbsorberState.currentClicks++;
+          const remaining = clickAbsorberState.clicksNeeded - clickAbsorberState.currentClicks;
+          
+          console.log(`[AdBlock] Click absorbed (${clickAbsorberState.currentClicks}/${clickAbsorberState.clicksNeeded})`);
+          
+          if (remaining > 0) {
+            // Update the counter text
+            const countEl = absorber.querySelector('.clickAbsorberCount');
+            if (countEl) {
+              countEl.textContent = `${remaining} more click${remaining > 1 ? 's' : ''} to start`;
+            }
+            // Visual feedback
+            absorber.style.background = `rgba(0, 0, 0, ${0.7 - (clickAbsorberState.currentClicks * 0.2)})`;
+          } else {
+            // All absorber clicks done - fade out and remove
+            absorber.classList.add('fading');
+            clickAbsorberState.active = false;
+            setTimeout(() => {
+              absorber.remove();
+              // Now simulate a click on the iframe to start the video
+              const iframe = container.querySelector('iframe');
+              if (iframe) {
+                // Focus the iframe to help with playback
+                iframe.focus();
+              }
+            }, 300);
+          }
+        });
+
+        container.appendChild(absorber);
+      }
+
       function addAdBlockOverlays(container) {
         // Remove existing overlays first
         container.querySelectorAll('.adBlockOverlay').forEach(el => el.remove());
@@ -683,7 +880,7 @@
           overlay.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log('Ad click blocked');
+            console.log('[AdBlock] Corner/edge click blocked');
           });
           container.appendChild(overlay);
         });
@@ -824,6 +1021,12 @@
 
         // Add ad-blocking overlays
         addAdBlockOverlays(streamContainer);
+        
+        // Add click absorber for streams (absorbs initial ad-triggering clicks)
+        if (!sandboxed) {
+          // Only add click absorber when sandbox is disabled (more vulnerable to ads)
+          createClickAbsorber(streamContainer);
+        }
 
         titleEl.textContent = stream.title;
         nowPlayingEl.textContent = stream.title;
