@@ -667,6 +667,36 @@
           // This prevents ad scripts from trapping users
         });
 
+        // Auto-refocus when popup steals focus
+        let lastBlurTime = 0;
+        window.addEventListener('blur', function() {
+          lastBlurTime = Date.now();
+          // Try to refocus after a short delay
+          setTimeout(() => {
+            if (document.hidden) {
+              // Page is hidden (popup took focus), try to refocus
+              window.focus();
+            }
+          }, 100);
+        });
+
+        // Close any popup windows that we can access
+        const trackedPopups = [];
+        const originalOpen2 = window.open;
+        window.open = function(url, name, features) {
+          console.warn("[AdBlock] Popup blocked:", url);
+          // Return fake window to satisfy ad scripts
+          return {
+            closed: false,
+            close: function() { this.closed = true; },
+            focus: function() {},
+            blur: function() {},
+            postMessage: function() {},
+            location: { href: '', replace: function() {}, assign: function() {} },
+            document: { write: function() {}, close: function() {} }
+          };
+        };
+
         console.log("[AdBlock] Popup and ad blocking active");
       })();
 
@@ -792,71 +822,41 @@
         }
       }
 
-      // Click absorber state - tracks clicks needed before allowing through
-      const clickAbsorberState = {
-        clicksNeeded: 2,
-        currentClicks: 0,
-        active: false
-      };
-
-      function resetClickAbsorber() {
-        clickAbsorberState.currentClicks = 0;
-        clickAbsorberState.active = false;
-      }
-
-      function createClickAbsorber(container) {
-        // Remove existing absorber
+      // Popup warning overlay - informs user about ad popups
+      function createPopupWarning(container) {
+        // Remove existing warning
         container.querySelectorAll('.clickAbsorber').forEach(el => el.remove());
-        
-        // Reset state for new stream
-        clickAbsorberState.currentClicks = 0;
-        clickAbsorberState.active = true;
 
-        const absorber = document.createElement('div');
-        absorber.className = 'clickAbsorber';
-        absorber.innerHTML = `
+        const warning = document.createElement('div');
+        warning.className = 'clickAbsorber';
+        warning.innerHTML = `
           <div class="clickAbsorberIcon">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </div>
-          <div class="clickAbsorberText">Click to Play</div>
-          <div class="clickAbsorberHint">Ad protection enabled</div>
-          <div class="clickAbsorberCount">${clickAbsorberState.clicksNeeded} clicks to start</div>
+          <div class="clickAbsorberText">Click to Watch Stream</div>
+          <div class="clickAbsorberHint" style="color: #fbbf24; max-width: 280px; text-align: center; line-height: 1.4;">
+            A popup ad may open on first click.<br>Just close it and the video will play.
+          </div>
+          <div class="clickAbsorberCount">Click anywhere to continue</div>
         `;
 
-        absorber.addEventListener('click', (e) => {
+        warning.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
           
-          clickAbsorberState.currentClicks++;
-          const remaining = clickAbsorberState.clicksNeeded - clickAbsorberState.currentClicks;
-          
-          console.log(`[AdBlock] Click absorbed (${clickAbsorberState.currentClicks}/${clickAbsorberState.clicksNeeded})`);
-          
-          if (remaining > 0) {
-            // Update the counter text
-            const countEl = absorber.querySelector('.clickAbsorberCount');
-            if (countEl) {
-              countEl.textContent = `${remaining} more click${remaining > 1 ? 's' : ''} to start`;
+          // Fade out and remove
+          warning.classList.add('fading');
+          setTimeout(() => {
+            warning.remove();
+            // Focus the iframe to help with playback
+            const iframe = container.querySelector('iframe');
+            if (iframe) {
+              iframe.focus();
             }
-            // Visual feedback
-            absorber.style.background = `rgba(0, 0, 0, ${0.7 - (clickAbsorberState.currentClicks * 0.2)})`;
-          } else {
-            // All absorber clicks done - fade out and remove
-            absorber.classList.add('fading');
-            clickAbsorberState.active = false;
-            setTimeout(() => {
-              absorber.remove();
-              // Now simulate a click on the iframe to start the video
-              const iframe = container.querySelector('iframe');
-              if (iframe) {
-                // Focus the iframe to help with playback
-                iframe.focus();
-              }
-            }, 300);
-          }
+          }, 300);
         });
 
-        container.appendChild(absorber);
+        container.appendChild(warning);
       }
 
       function addAdBlockOverlays(container) {
@@ -1022,10 +1022,10 @@
         // Add ad-blocking overlays
         addAdBlockOverlays(streamContainer);
         
-        // Add click absorber for streams (absorbs initial ad-triggering clicks)
+        // Add popup warning for unsandboxed streams
         if (!sandboxed) {
-          // Only add click absorber when sandbox is disabled (more vulnerable to ads)
-          createClickAbsorber(streamContainer);
+          // Show warning when sandbox is disabled (popup ads may occur)
+          createPopupWarning(streamContainer);
         }
 
         titleEl.textContent = stream.title;
@@ -1484,7 +1484,7 @@
           title: game.title,
           embedSrc: game.embedSrc,
           embedCode: game.embedCode,
-          sandboxed: true  // sandbox blocks popups while allowing video playback
+          sandboxed: false  // modistreams requires no sandbox to play video
         };
         
         // Track currently playing game for UI highlighting
