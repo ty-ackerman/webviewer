@@ -671,7 +671,7 @@
       })();
 
       const VIEW_STORAGE_KEY = "channel-picker-active-view";
-      const STREAM_SANDBOX_ATTR = "allow-scripts allow-same-origin allow-presentation";
+      const STREAM_SANDBOX_ATTR = "allow-scripts allow-same-origin allow-presentation allow-forms";
       const STREAM_IFRAME_ALLOW = "autoplay; encrypted-media; picture-in-picture";
       let activeView = "videos";
       let activeStreamState = null;
@@ -1484,7 +1484,7 @@
           title: game.title,
           embedSrc: game.embedSrc,
           embedCode: game.embedCode,
-          sandboxed: false  // modistreams needs full permissions to work
+          sandboxed: true  // sandbox blocks popups while allowing video playback
         };
         
         // Track currently playing game for UI highlighting
